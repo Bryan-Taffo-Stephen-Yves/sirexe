@@ -1,4 +1,4 @@
-// Cirex · device-event
+// Sirexe · device-event
 // Tout ce que la station de terrain (ESP32 / ESP32-CAM, ou le relais Wi-Fi local) envoie
 // en plus des mesures d'eau : état complet, SMS reçus par le module SIM, photos. Et la file
 // des commandes demandées depuis l'écran (photo, flash, lampe, mode).

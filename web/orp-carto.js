@@ -1,4 +1,4 @@
-/* Cirex · prototype — moteur cartographique (Leaflet 1.9.4 chargé par la page).
+/* Sirexe · prototype — moteur cartographique (Leaflet 1.9.4 chargé par la page).
    <orp-map>     carte de surveillance (Esri World Imagery, Sentinel-2 cloudless EOX, couches, vol d'alerte)
    <orp-compare> comparateur avant / après sur les composites Sentinel-2 L2A du pipeline NDVI
    Les zones de changement viennent de window.CIREX (changes.geojson) ; rien n'est tracé à la main.
@@ -12,7 +12,7 @@
     plan: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
     places: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
     hydro: 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Esri_Hydro_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
-    topo: 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json'
+    topo: 'vendor/world-atlas-2.0.2/countries-110m.json' // contour de la Côte d'Ivoire (mini-carte), hébergé avec le site
   };
   const s2 = yr => 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-' + yr + '_3857/default/g/{z}/{y}/{x}.jpg';
   const CI = [[4.35, -8.6], [10.74, -2.49]];

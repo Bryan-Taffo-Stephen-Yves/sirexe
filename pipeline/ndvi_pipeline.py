@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cirex — NDVI change detection on Sentinel-2 L2A around a point.
+"""Sirexe — NDVI change detection on Sentinel-2 L2A around a point.
 
 Reads Sentinel-2 L2A cloud-optimised GeoTIFFs straight from the public AWS
 Open Data bucket (s3://sentinel-cogs, no account needed), masks clouds with the

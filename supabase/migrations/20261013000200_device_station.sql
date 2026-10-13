@@ -1,4 +1,4 @@
--- Cirex · station de terrain (ESP32 / ESP32-CAM) via le serveur
+-- Sirexe · station de terrain (ESP32 / ESP32-CAM) via le serveur
 -- Le boîtier (ou le relais Wi-Fi local) envoie à la fonction device-event :
 --   son état complet (chaque clé devient une case dans l'écran), ses SMS reçus, ses photos.
 -- La page envoie des commandes (photo, flash, lampe, mode) que le boîtier récupère.

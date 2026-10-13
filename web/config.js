@@ -1,4 +1,4 @@
-/* Cirex · configuration publique du navigateur.
+/* Sirexe · configuration publique du navigateur.
    Clé publiable Supabase : elle est faite pour être visible côté client. Les droits réels sont
    fixés par les règles RLS (voir supabase/migrations). Ne jamais mettre ici la clé service_role
    ni le jeton du bot Telegram : ils restent dans les secrets des fonctions Supabase. */

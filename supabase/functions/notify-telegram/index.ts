@@ -1,4 +1,4 @@
-// Cirex · notify-telegram
+// Sirexe · notify-telegram
 // Appelée par la page (bouton « Tester », alertes du mode Simulation / ESP32 local / webcam).
 // La page n'envoie jamais de texte libre ni de jeton : le message est composé ici à partir de
 // champs vérifiés, et limité à un envoi toutes les 30 secondes.
@@ -33,7 +33,7 @@ Deno.serve(async (req) => {
 
   let text: string;
   if (b.kind === "test") {
-    text = "Cirex · test de notification réussi.\nPrototype SIREXE 2026";
+    text = "Sirexe · test de notification réussi.\nPrototype SIREXE 2026";
   } else if (b.kind === "alerte") {
     const sensor = /^[A-Z]{2,4}-[A-Z]{2}-\d{3}$/.test(String(b.sensor_id)) ? String(b.sensor_id) : "capteur inconnu";
     const score = Math.max(0, Math.min(100, Math.round(Number(b.score) || 0)));
@@ -41,7 +41,7 @@ Deno.serve(async (req) => {
     const src = SOURCES[String(b.source)] || "inconnue";
     const code = /^[A-Z]{3}-[\w-]{1,16}$/.test(String(b.alert_code || "")) ? String(b.alert_code) : null;
     text = [
-      src === "simulation" ? "Cirex · ALERTE (SIMULATION)" : "Cirex · ALERTE",
+      src === "simulation" ? "Sirexe · ALERTE (SIMULATION)" : "Sirexe · ALERTE",
       `Capteur ${sensor} · source : ${src}`,
       `Indice ${score}/100 · turbidité ${turb} NTU (réf. 5)`,
       code ? `Référence ${code}` : null,

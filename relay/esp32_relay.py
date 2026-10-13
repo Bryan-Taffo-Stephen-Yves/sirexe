@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cirex · relais station ESP32 / ESP32-CAM → serveur.
+"""Sirexe · relais station ESP32 / ESP32-CAM → serveur.
 
 Pour un boîtier qui ne parle qu'en HTTP sur le Wi-Fi du site (ESP32-CAM, carte sans TLS).
 Ce script tourne sur un ordinateur (ou un Raspberry Pi) du même réseau et transmet tout au

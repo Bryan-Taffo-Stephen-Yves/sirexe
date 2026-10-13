@@ -1,0 +1,17 @@
+# Sirexe · site statique, sans étape de build : Netlify publie le dossier web/ tel quel.
+[build]
+  publish = "web"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # la caméra sert au mode « webcam » (turbidité optique) ; pas de micro ni de position
+    Permissions-Policy = "camera=(self), microphone=(), geolocation=()"
+
+# bibliothèques versionnées dans le chemin (leaflet-1.9.4, …) : jamais modifiées sur place
+[[headers]]
+  for = "/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

@@ -1,4 +1,4 @@
-/* Cirex · accès aux données partagé par les écrans.
+/* Sirexe · accès aux données partagé par les écrans.
    - window.CIREX.ready : résultats du pipeline NDVI (summary.json, ndvi_series.json, changes.geojson)
    - window.CIREX.db()  : client Supabase (null si la bibliothèque ou la configuration manque)
    - utilitaires de format français (dates, nombres)

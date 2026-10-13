@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cirex · rejeu de mesures (plan B de la démonstration).
+"""Sirexe · rejeu de mesures (plan B de la démonstration).
 
 Envoie à la fonction ingest-reading une séquence enregistrée « eau claire → terre versée »
 en se faisant passer pour le capteur, avec la source « rejeu » : la chaîne serveur complète

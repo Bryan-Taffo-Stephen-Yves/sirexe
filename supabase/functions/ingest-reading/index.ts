@@ -1,4 +1,4 @@
-// Cirex · ingest-reading
+// Sirexe · ingest-reading
 // Reçoit une mesure du boîtier (ESP32 en HTTPS, relais Wi-Fi local ou script de rejeu),
 // vérifie la clé du capteur, enregistre la mesure. L'indice de suspicion et l'alerte sont
 // calculés par la base (triggers readings_score / readings_alert). Si une alerte vient d'être
@@ -85,7 +85,7 @@ Deno.serve(async (req) => {
   if (alert) {
     const base = (sensor.baseline || {}) as Record<string, number>;
     const lines = [
-      row.source === "rejeu" ? "Cirex · ALERTE (rejeu de mesures enregistrées)" : "Cirex · ALERTE",
+      row.source === "rejeu" ? "Sirexe · ALERTE (rejeu de mesures enregistrées)" : "Sirexe · ALERTE",
       `Capteur ${sensor.id} · ${sensor.locality || sensor.name}`,
       `Indice ${Math.round(Number(alert.suspicion_score))}/100 · turbidité ${Math.round(Number(row.turbidity_ntu))} NTU (réf. ${base.turbidity_ntu ?? "?"})`,
       `Alerte ${alert.code} · ${hhmmss(alert.created_at)} GMT`,

@@ -35,7 +35,7 @@ Après le rapport, ouvrir **Station ESP32** : dernière photo envoyée par l'ESP
    Source « Boîtier · serveur » dans le panneau démo : rien ne change pour le jury.
 2. **Capteur en panne** : rejeu de mesures enregistrées, chaîne serveur complète (alerte et Telegram réels, marqués « rejeu »).
    `CIREX_DEVICE_KEY=… python3 relay/replay.py`
-3. **Pas d'Internet du tout** : panneau démo → source **Simulation**, touche **D**. Le badge affiche « Simulation » ; Telegram ne part pas. Les fonds de carte ne chargent pas sans réseau : passer la vidéo.
+3. **Pas d'Internet du tout** : servir le site depuis l'ordinateur (`cd web && python3 -m http.server 8000`, puis `http://localhost:8000/`), panneau démo → source **Simulation**, touche **D**. Le badge affiche « Simulation » ; Telegram ne part pas. Tout l'écran fonctionne (bibliothèques et images Sentinel-2 servies en local) sauf les fonds de carte : montrer le comparateur, les zones et le rapport, ou passer la vidéo. Une mission créée hors ligne reste dans la page (`LOCAL-1`) et n'est pas enregistrée.
 4. **Vidéo** : enregistrer l'écran pendant une démo réussie (plan 1 ou 2), 3 min, avec le téléphone visible. Outil : OBS ou l'enregistreur intégré (Win + Alt + R, Cmd + Maj + 5).
 
 ## Après chaque passage

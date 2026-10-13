@@ -1,4 +1,4 @@
--- Cirex · schéma initial (capteurs, mesures, alertes, missions, rapports, notifications)
+-- Sirexe · schéma initial (capteurs, mesures, alertes, missions, rapports, notifications)
 -- Prototype SIREXE 2026 : pas encore de comptes utilisateurs. Le navigateur utilise la clé
 -- publique (rôle anon) : lecture de tout sauf les clés des capteurs, écriture limitée aux
 -- missions, rapports et au statut des alertes. Les mesures n'entrent que par la fonction

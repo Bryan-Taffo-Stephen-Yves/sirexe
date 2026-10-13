@@ -3,29 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rapport d’intervention · Cirex</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<title>Rapport d’intervention · Sirexe</title>
+<style>@font-face{font-family:'Urbanist';font-style:normal;font-display:swap;font-weight:100 900;src:url(app/fonts/urbanist-latin-wght-normal.woff2) format('woff2-variations')}@font-face{font-family:'Urbanist';font-style:normal;font-display:swap;font-weight:100 900;src:url(app/fonts/urbanist-latin-ext-wght-normal.woff2) format('woff2-variations');unicode-range:U+0100-02BA,U+1E00-1E9F}</style>
 <script src="./config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="vendor/supabase-js-2.45.4/supabase.js"></script>
 <script src="./cirex-data.js"></script>
 <style>
-  :root { --ink: #1A1F1D; --ink-2: #4F5853; --ink-3: #5E6863; --line: #E3E6E1; --bg: #E4E7E2; --paper: #FFFFFF; --green: #2F9E6E; --magenta: #C2399A; --warn-bg: #FBF6E6; --warn-bd: #C99A1A; --warn-fg: #7A5C00; }
+  :root { --ink: #17171A; --ink-2: #4E4F55; --ink-3: #66676E; --line: #E8E6DE; --bg: #F3F2EC; --paper: #FFFFFF; --green: #2F9E6E; --magenta: #C2399A; --warn-bg: #FBF6E6; --warn-bd: #C99A1A; --warn-fg: #7A5C00; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Geist', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-  .bar { position: sticky; top: 0; z-index: 2; display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 12px 16px; background: #FFFFFF; border-bottom: 1px solid var(--line); }
-  .bar a { color: #1E6E4C; text-decoration: none; font-size: 14px; }
-  .bar button { height: 38px; padding: 0 16px; border-radius: 999px; border: 0; background: #1F7A53; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Urbanist', system-ui, sans-serif; font-weight: 500; -webkit-font-smoothing: antialiased; }
+  .bar { position: sticky; top: 0; z-index: 2; display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 12px 20px; background: rgba(243,242,236,.78); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); }
+  .bar a { color: var(--ink); text-decoration: none; font-size: 15px; font-weight: 700; }
+  .bar button { height: 44px; padding: 0 20px; border-radius: 999px; border: 0; background: #17171A; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
   .bar button:focus-visible, .bar a:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
-  .page { width: min(210mm, calc(100% - 32px)); margin: 24px auto; background: var(--paper); padding: 18mm 16mm; box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 18px 48px rgba(0,0,0,.1); }
+  .page { width: min(210mm, calc(100% - 32px)); margin: 24px auto; background: var(--paper); padding: 18mm 16mm; border-radius: 24px; box-shadow: 0 1px 2px rgba(40,34,10,.04), 0 18px 48px rgba(40,34,10,.1); }
   header.doc { display: flex; justify-content: space-between; gap: 16px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
   .brand { display: flex; gap: 10px; align-items: center; }
   .brand b { font-size: 17px; }
   .brand span, .meta { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
-  .meta { text-align: right; font-family: 'IBM Plex Mono', monospace; }
-  h1 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 500; font-size: 28px; margin: 18px 0 4px; letter-spacing: -.01em; }
-  h2 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 500; font-size: 18px; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+  .meta { text-align: right; font-variant-numeric: tabular-nums; }
+  h1 { font-weight: 700; font-size: 30px; margin: 18px 0 4px; letter-spacing: -.035em; }
+  h2 { font-weight: 700; font-size: 18px; letter-spacing: -.02em; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
   p, li { font-size: 13.5px; line-height: 1.55; }
   .warn { margin: 10px 0; padding: 8px 12px; border-radius: 10px; background: var(--warn-bg); border: 1px dashed var(--warn-bd); color: var(--warn-fg); font-size: 12.5px; }
   .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
@@ -35,7 +33,7 @@
   table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   th, td { text-align: left; padding: 6px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
   th { color: var(--ink-2); font-weight: 500; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: 'IBM Plex Mono', monospace; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
   .imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   figure { margin: 0; }
   .frame { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 8px; border: 1px solid var(--line); background: #0F1A15; }
@@ -44,13 +42,13 @@
   .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
   .sign div { border: 1px solid var(--line); border-radius: 10px; height: 90px; padding: 8px 10px; font-size: 12px; color: var(--ink-2); }
   .foot { margin-top: 18px; font-size: 11px; color: var(--ink-3); line-height: 1.5; }
-  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .mono { font-weight: 700; font-variant-numeric: tabular-nums; }
   @media (max-width: 640px) { .kpis { grid-template-columns: 1fr 1fr; } .page { padding: 20px 16px; } header.doc { flex-direction: column; } .meta { text-align: left; } }
   @media print { html, body { background: #fff; } .bar { display: none; } .page { width: auto; margin: 0; padding: 0; box-shadow: none; } h2 { break-after: avoid; } .imgs, table, .sign { break-inside: avoid; } @page { size: A4; margin: 14mm 12mm; } }
 </style>
 </head>
 <body>
-<div class="bar" role="navigation" aria-label="Navigation"><a href="Centre de surveillance.dc.html">← Centre de surveillance</a><button type="button" onclick="window.print()">Imprimer ou enregistrer en PDF</button></div>
+<div class="bar" role="navigation" aria-label="Navigation"><a href="app.html#/rapports">← Rapports</a><button type="button" onclick="window.print()">Imprimer ou enregistrer en PDF</button></div>
 <main class="page" id="doc" aria-busy="true">
   <p>Chargement du rapport…</p>
 </main>
@@ -86,7 +84,7 @@
     doc.textContent = ''; doc.setAttribute('aria-busy', 'false');
     const S = sat && sat.summary, today = new Date();
     doc.append(el('header', { class: 'doc' },
-      el('div', { class: 'brand' }, el('span', { 'aria-hidden': 'true', style: 'display:inline-block;width:30px;height:30px;border-radius:8px;border:2px solid #C9A227' }), el('div', null, el('b', null, 'Cirex · Prototype'), el('br'), el('span', null, 'BRENT GROUP · SIREXE Hackathon 2026 · sans affiliation officielle'))),
+      el('div', { class: 'brand' }, el('span', { 'aria-hidden': 'true', style: 'display:inline-block;width:30px;height:30px;border-radius:10px;background:#F6CE3E' }), el('div', null, el('b', null, 'Sirexe · Prototype'), el('br'), el('span', null, 'BRENT GROUP · SIREXE Hackathon 2026 · sans affiliation officielle'))),
       el('div', { class: 'meta' }, (report ? report.code : 'Brouillon non enregistré'), el('br'), 'Édité le ' + C.dateFr(today.toISOString()), el('br'), report ? 'Statut : ' + ({ brouillon: 'brouillon', transmis: 'transmis', publie: 'publié' }[report.status] || report.status) : '')));
     doc.append(el('h1', null, report ? report.title : 'Site ORP-0142 · Kokumbo'));
     doc.append(el('p', { style: 'margin:0;color:#4F5853' }, (report ? report.kind : 'Rapport d’alerte') + ' · Kokumbo, région du Bélier · ' + (S ? C.fr(Math.abs(S.aoi.lat), 4) + '° N, ' + C.fr(Math.abs(S.aoi.lon), 4) + '° O' : '')));
@@ -144,7 +142,7 @@
 
     doc.append(el('h2', null, '5. Visas'));
     doc.append(el('div', { class: 'sign' }, el('div', null, 'Agent de terrain · nom, date, signature'), el('div', null, 'Superviseur · nom, date, signature')));
-    doc.append(el('p', { class: 'foot' }, 'Sources : Copernicus Sentinel-2 L2A (ESA) via AWS Open Data « sentinel-cogs », traitement Cirex (pipeline/ndvi_pipeline.py' + (S ? ', calcul du ' + C.dateFr(S.genere_le) : '') + '). Mesures capteur : boîtier Cirex ' + (alert ? alert.sensor_id : '') + '. Document produit par un prototype de concours, sans valeur officielle.'));
+    doc.append(el('p', { class: 'foot' }, 'Sources : Copernicus Sentinel-2 L2A (ESA) via AWS Open Data « sentinel-cogs », traitement Sirexe (pipeline/ndvi_pipeline.py' + (S ? ', calcul du ' + C.dateFr(S.genere_le) : '') + '). Mesures capteur : boîtier Sirexe ' + (alert ? alert.sensor_id : '') + '. Document produit par un prototype de concours, sans valeur officielle.'));
   }
 
   if (!C) { doc.textContent = 'cirex-data.js introuvable.'; return; }

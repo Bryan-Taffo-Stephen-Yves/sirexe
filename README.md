@@ -1,4 +1,4 @@
-# Cirex · détection d'orpaillage clandestin
+# Sirexe · détection d'orpaillage clandestin
 
 SIREXE Hackathon 2026, Prix Liberté. Projet présélectionné parmi les 10 meilleurs. Porteur : BRENT GROUP.
 
@@ -24,8 +24,12 @@ La détection satellite n'est pas de l'IA : c'est une comparaison d'indices NDVI
 
 ```
 web/                 site statique (aucune compilation)
-  Centre de surveillance.dc.html   écran principal (exporté de Claude Design, branché sur les données)
-  Comparateur.dc.html              avant / après Sentinel-2
+  app.html                         application (tableau de bord, carte, alertes, satellite, missions, rapports, capteurs, station, sites, équipe, paramètres), ordinateur et mobile
+  app/app.css, app/app.js          système de design et logique de l'interface (voir DESIGN.md)
+  app/fonts/, app/icons.js         police Urbanist et icônes Tabler, servies en local
+  vendor/                          Leaflet 1.9.4, topojson-client 3.1.0, supabase-js 2.45.4, world-atlas 2.0.2 (copies identiques aux CDN, licences jointes)
+  Centre de surveillance.dc.html   ancienne interface Claude Design (conservée pour référence)
+  Comparateur.dc.html              ancien comparateur Claude Design
   rapport.html                     rapport imprimable en PDF (?code=RPT-…)
   orp-carto.js                     cartes Leaflet (Esri, EOX, zones du pipeline)
   cirex-data.js                    lecture des JSON du pipeline + client Supabase
@@ -47,16 +51,22 @@ docs/ESP32.md                      contrat d'envoi des mesures pour le firmware
 ```bash
 cd web
 python3 -m http.server 8000
-# ouvrir http://localhost:8000/
+# ouvrir http://localhost:8000/ (redirige vers app.html)
 ```
 
 Touche **D** : séquence de démonstration. **Maj + D** : panneau démo (source des mesures, test Telegram). **R** (panneau ouvert) : réinitialiser.
 
-Les pages chargent React, Leaflet et Supabase depuis unpkg / jsDelivr et les fonds de carte depuis Esri et EOX : il faut Internet. Plan sans réseau : voir `docs/DEMO.md`.
+`app.html` et `rapport.html` ne chargent plus rien depuis un CDN : bibliothèques dans `web/vendor/`, police dans `web/app/fonts/`, images Sentinel-2 dans `web/data/`. Internet sert seulement aux fonds de carte (Esri, EOX) et au serveur Supabase. Sans serveur joignable, la page le dit (« serveur injoignable ») et une mission créée reste dans la page (`LOCAL-1`, non enregistrée). Les anciens écrans `.dc.html` chargent encore React depuis unpkg. Plan sans réseau : voir `docs/DEMO.md`.
 
 ## Mettre en ligne
 
-Le dossier `web/` est un site statique : Vercel, Netlify ou GitHub Pages, sans étape de build (dossier racine : `web`).
+Le dossier `web/` est un site statique, sans étape de build. Les trois hébergeurs sont prêts (Vercel et Netlify vérifiés avec leurs propres outils, GitHub Pages simulé sous `/sirexe/`) :
+
+- **Vercel** : « Add New → Project », importer le dépôt, ne rien changer, « Deploy ». `vercel.json` publie `web/`.
+- **Netlify** : « Add new site → Import an existing project », choisir le dépôt, « Deploy ». `netlify.toml` publie `web/`.
+- **GitHub Pages** : Settings → Pages → Source « GitHub Actions », puis Actions → « Publier sur GitHub Pages » → Run workflow. Le site est servi sous `/sirexe/` : tous les chemins sont relatifs, rien à modifier. Sur un dépôt privé, Pages demande un compte GitHub payant.
+
+Après la mise en ligne : ouvrir l'adresse sur ordinateur et sur téléphone, vérifier les fonds de carte, la pastille verte « Serveur connecté » et le bouton « Tester » de Telegram. L'adresse est en https : la webcam fonctionne, mais l'ESP32 en Wi-Fi local (http) est bloqué par le navigateur ; utiliser la source « Boîtier · serveur » (boîtier ou `relay/esp32_relay.py`).
 
 ## Serveur (Supabase, projet `sirexe`)
 
