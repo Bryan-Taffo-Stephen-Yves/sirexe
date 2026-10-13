@@ -64,7 +64,7 @@ Le dossier `web/` est un site statique, sans étape de build. Les trois héberge
 
 - **Vercel** : « Add New → Project », importer le dépôt, ne rien changer, « Deploy ». `vercel.json` publie `web/`.
 - **Netlify** : « Add new site → Import an existing project », choisir le dépôt, « Deploy ». `netlify.toml` publie `web/`.
-- **GitHub Pages** (dépôt public, gratuit) : la branche `gh-pages` contient le site et se met à jour toute seule à chaque push sur `main` qui modifie `web/` (`.github/workflows/gh-pages.yml`). À faire une seule fois par un administrateur du dépôt : Settings → Pages → « Deploy from a branch » → `gh-pages`, dossier `/ (root)` → Save. Adresse : https://bryan-taffo-stephen-yves.github.io/sirexe/ (chemins relatifs, rien à modifier).
+- **GitHub Pages** (dépôt public, gratuit) : la branche `gh-pages` contient le site et se met à jour toute seule à chaque push sur `main` qui modifie `web/` (`.github/workflows/gh-pages.yml`). Pages est activé sur cette branche. Adresse : https://bryan-taffo-stephen-yves.github.io/sirexe/ (chemins relatifs, rien à modifier). Si l'adresse ne répond plus : Settings → Pages → « Deploy from a branch » → `gh-pages`, dossier `/ (root)` → Save.
 
 Après la mise en ligne : ouvrir l'adresse sur ordinateur et sur téléphone, vérifier les fonds de carte, la pastille verte « Serveur connecté » et le bouton « Tester » de Telegram. L'adresse est en https : la webcam fonctionne, mais l'ESP32 en Wi-Fi local (http) est bloqué par le navigateur ; utiliser la source « Boîtier · serveur » (boîtier ou `relay/esp32_relay.py`).
 

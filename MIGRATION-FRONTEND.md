@@ -30,7 +30,7 @@ Toute la logique de l'ancien écran est conservée : indice de suspicion (même 
 
 ### État au 13 octobre 2026
 
-- Fait : étapes 1 et 3 (démo complète sur ordinateur 1440 px et téléphone 390 px, sans erreur JavaScript, sans défilement horizontal, 0 violation axe), étape 4 (fonctions redéployées, réponses vérifiées), étape 5 préparée (`vercel.json`, `netlify.toml`, branche `gh-pages` tenue à jour par `.github/workflows/gh-pages.yml` ; reste à activer Pages dans Settings, voir README « Mettre en ligne »).
+- Fait : étapes 1 et 3 (démo complète sur ordinateur 1440 px et téléphone 390 px, sans erreur JavaScript, sans défilement horizontal, 0 violation axe), étape 4 (fonctions redéployées, réponses vérifiées), étape 5 préparée (`vercel.json`, `netlify.toml`, site publié sur GitHub Pages depuis la branche `gh-pages`, tenue à jour par `.github/workflows/gh-pages.yml`, voir README « Mettre en ligne »).
 - Corrigé : deux débordements sur téléphone (`#/esp`, `#/sites`), message clair quand le serveur est injoignable (mission gardée dans la page, rapport ouvert en aperçu), bibliothèques servies depuis `web/vendor/` au lieu des CDN.
 - À vérifier par l'équipe avec Internet (l'environnement de test bloquait ces adresses) : fonds de carte Esri / EOX, pastille « Serveur connecté », mesures PH-CI-003 en mode « Boîtier · serveur ».
 - Étape 6 non faite : à décider après la démo validée.

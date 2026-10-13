@@ -1,6 +1,6 @@
 # Sirexe · met le dossier web/ en ligne sur la branche gh-pages (site statique, sans build).
-# Une seule fois : Settings → Pages → « Deploy from a branch » → branche gh-pages, dossier / (root) → Save.
-# Ensuite, chaque push sur main qui modifie web/ met le site à jour (environ 1 minute).
+# Pages publie cette branche (réglage : Settings → Pages → « Deploy from a branch » → gh-pages, / (root)).
+# Chaque push sur main qui modifie web/ met le site à jour (environ 1 minute).
 # Adresse : https://<compte>.github.io/sirexe/ (tous les chemins du site sont relatifs).
 name: Mettre à jour le site
 
