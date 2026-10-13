@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="utf-8">
+<title>Comparateur avant / après · Cirex</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
 </head>
@@ -26,9 +27,21 @@
     :focus-visible { outline: 2px solid #2F9E6E; outline-offset: 2px; }
     input[type=range] { accent-color: #3FBF86; }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+    /* Téléphone et petite tablette : carte au-dessus, panneau d'analyse en dessous */
+    @media (max-width: 820px) {
+      .cx-root { height: auto !important; min-height: 100vh; }
+      .cx-body { flex-direction: column; }
+      .cx-map { flex: none !important; height: 62vh; min-height: 380px; }
+      .cx-aside { width: auto !important; border-left: 0 !important; border-top: 1px solid #E3E6E1; }
+      .cx-tabs { order: 3; width: 100%; overflow-x: auto; }
+      .cx-tabs button { flex: none; }
+      .cx-title { flex-wrap: wrap; row-gap: 6px; }
+      .cx-title h1 { white-space: normal !important; font-size: 21px !important; }
+      .cx-root header > div { min-width: 0 !important; flex-basis: 100% !important; }
+    }
   </style>
 </helmet>
-<div data-screen-label="05 Comparateur avant après" style="display:flex; flex-direction:column; width:100%; height:{{ rootH }}; min-height:600px; background:#F3F4F1; color:#1A1F1D; font-family:'Geist', system-ui, sans-serif;">
+<div class="cx-root" data-screen-label="05 Comparateur avant après" style="display:flex; flex-direction:column; width:100%; height:{{ rootH }}; min-height:600px; background:#F3F4F1; color:#1A1F1D; font-family:'Geist', system-ui, sans-serif;">
   <header style="flex:none; min-height:68px; display:flex; flex-wrap:wrap; align-items:center; column-gap:16px; row-gap:8px; padding:12px 20px 12px 16px; box-sizing:border-box; background:#FFFFFF; border-bottom:1px solid #E3E6E1;">
     <sc-if value="{{ embedded }}" hint-placeholder-val="{{ false }}">
       <button type="button" onClick="{{ close }}" aria-label="Fermer le comparateur" title="Fermer · Échap" style="flex:none; width:40px; height:40px; border-radius:50%; border:1px solid #E3E6E1; background:#FFFFFF; display:grid; place-items:center; color:#1A1F1D; cursor:pointer;" style-hover="background:#F7F8F6;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg></button>
@@ -37,13 +50,13 @@
       <a href="Centre de surveillance.dc.html" aria-label="Retour au centre de surveillance" title="Retour au centre de surveillance" style="flex:none; width:40px; height:40px; box-sizing:border-box; border-radius:50%; border:1px solid #E3E6E1; background:#FFFFFF; display:grid; place-items:center; color:#1A1F1D;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg></a>
     </sc-if>
     <div style="flex:1 1 320px; min-width:280px; display:flex; flex-direction:column; gap:4px;">
-      <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+      <div class="cx-title" style="display:flex; align-items:center; gap:10px; min-width:0;">
         <h1 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:24px; font-weight:500; line-height:1.1; letter-spacing:-0.01em; white-space:nowrap;">Comparateur avant / après</h1>
         <span style="flex:none; display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 9px; border-radius:999px; background:#F8E7F2; color:#962A71; font-size:12px; font-weight:600;"><span style="width:8px; height:8px; border-radius:2px; background:#D946A8;"></span>Perte de végétation détectée</span>
       </div>
       <div style="font-size:13px; color:#4F5853; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Site ORP-0142 · Kokumbo · Bélier · <span style="font-family:'IBM Plex Mono', monospace;">{{ coordTxt }}</span> · rayon d’analyse {{ radiusTxt }}{{ alertTxt }}</div>
     </div>
-    <div role="tablist" aria-label="Mode de comparaison" style="flex:none; display:flex; gap:2px; padding:3px; border-radius:999px; background:#F1F3F0; border:1px solid #E3E6E1;">
+    <div class="cx-tabs" role="tablist" aria-label="Mode de comparaison" style="flex:none; display:flex; gap:2px; padding:3px; border-radius:999px; background:#F1F3F0; border:1px solid #E3E6E1;">
       <sc-for list="{{ modes }}" as="m" hint-placeholder-count="4">
         <button type="button" role="tab" aria-selected="{{ m.on }}" onClick="{{ m.pick }}" style="height:34px; padding:0 14px; border-radius:999px; border:0; background:{{ m.bg }}; box-shadow:{{ m.sh }}; color:{{ m.fg }}; font-size:14px; font-weight:{{ m.w }}; cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:7px;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ m.d }}"></path></svg>{{ m.label }}
@@ -53,8 +66,8 @@
     <span title="{{ srcTitle }}" style="flex:none; display:inline-flex; align-items:center; gap:6px; height:30px; padding:0 10px; border-radius:999px; border:1px {{ srcBd }}; color:{{ srcFg }}; background:{{ srcBg }}; font-size:13px; font-weight:500; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 7 9 3 5 7l4 4"></path><path d="m17 11 4 4-4 4-4-4"></path><path d="m8 12 4 4 6-6-4-4Z"></path><path d="m16 8 3-3"></path><path d="M9 21a6 6 0 0 0-6-6"></path></svg>{{ srcLabel }}</span>
   </header>
 
-  <div style="flex:1; min-height:0; display:flex;">
-    <div style="position:relative; flex:1; min-width:0; background:#0F1A15; overflow:hidden;">
+  <main class="cx-body" style="flex:1; min-height:0; display:flex;">
+    <div class="cx-map" style="position:relative; flex:1; min-width:0; background:#0F1A15; overflow:hidden;">
       <x-import component-from-global-scope="orp-compare" data-uid="{{ uid }}" data-mode="{{ mode }}" data-index="{{ index }}" data-opacity="{{ opacity }}" style="position:absolute; inset:0;" hint-size="100%,100%"></x-import>
 
       <div style="position:absolute; right:14px; top:50%; transform:translateY(-50%); z-index:700; display:flex; flex-direction:column; gap:6px;">
@@ -88,7 +101,7 @@
       </sc-if>
     </div>
 
-    <aside aria-label="Résultat de l’analyse" style="flex:none; width:392px; display:flex; flex-direction:column; background:#FFFFFF; border-left:1px solid #E3E6E1; box-sizing:border-box;">
+    <aside class="cx-aside" aria-label="Résultat de l’analyse" style="flex:none; width:392px; display:flex; flex-direction:column; background:#FFFFFF; border-left:1px solid #E3E6E1; box-sizing:border-box;">
       <div style="flex:1; min-height:0; overflow:auto; padding:20px 20px 12px; display:flex; flex-direction:column; gap:18px;">
         <sc-if value="{{ noData }}" hint-placeholder-val="{{ false }}">
           <div role="alert" style="padding:12px 14px; border-radius:14px; background:#FDF1F1; border:1px solid #F3CFCF; font-size:14px; line-height:1.45; color:#A62C2C;">Résultats du pipeline introuvables ({{ dataPath }}). Lancez <span style="font-family:'IBM Plex Mono', monospace;">pipeline/ndvi_pipeline.py</span> puis rechargez la page.</div>
@@ -106,7 +119,7 @@
               <span style="grid-row:span 2; width:30px; height:30px; border-radius:50%; background:#D946A8; color:#FFFFFF; display:grid; place-items:center; font-size:14px; font-weight:600;">{{ z.n }}</span>
               <span style="font-size:15px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ z.type }}</span>
               <span style="display:flex; align-items:baseline; gap:3px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:24px; line-height:1;">{{ z.ha }}</span><span style="font-size:13px; color:#4F5853;">ha</span></span>
-              <span style="grid-column:2 / 4; display:flex; align-items:center; gap:10px;"><span style="flex:1; height:6px; border-radius:999px; background:#E7E9E5; overflow:hidden;"><span style="display:block; height:100%; width:{{ z.sigW }}; border-radius:999px; background:#A8307F;"></span></span><span title="Baisse moyenne du NDVI entre avant et après : intensité du changement, pas une probabilité." style="font-size:13px; color:#4F5853; white-space:nowrap;">baisse NDVI {{ z.sig }} · depuis {{ z.first }}</span></span>
+              <span style="grid-column:2 / 4; display:flex; align-items:center; gap:10px;"><span style="flex:1; height:6px; border-radius:999px; background:#E7E9E5; overflow:hidden;"><span style="display:block; height:100%; width:{{ z.sigW }}; border-radius:999px; background:#A8307F;"></span></span><span title="Baisse moyenne du NDVI entre avant et après : intensité du changement, pas une probabilité." style="font-size:13px; color:#4F5853; white-space:nowrap;">NDVI −{{ z.sig }} · {{ z.first }}</span></span>
             </div>
           </sc-for>
           <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px; color:#4F5853; padding:0 4px;">{{ moreTxt }}</span></sc-if>
@@ -133,17 +146,17 @@
             <span style="font-weight:600; color:#1A1F1D;">Méthode</span><span>Médianes NDVI, nuages masqués (bande SCL), dates à moins de 70 % de ciel clair écartées. Zone retenue : NDVI ≥ 0,55 avant, ≤ 0,35 après, baisse ≥ 0,25, surface ≥ 0,5 ha.</span>
             <span style="font-weight:600; color:#1A1F1D;">Limites</span><span>Pas de modèle d’IA : un défrichement agricole donne le même signal qu’un chantier d’orpaillage. Vérification terrain obligatoire. En saison des pluies, les nuages réduisent les dates utilisables (radar Sentinel-1 prévu).</span>
           </div>
-          <span style="font-size:12px; color:#6B7570;">{{ footnote }}</span>
+          <span style="font-size:12px; color:#5E6863;">{{ footnote }}</span>
         </div>
       </div>
-      <div style="flex:none; padding:12px 20px 16px; border-top:1px solid #E3E6E1; display:grid; grid-template-columns:1fr auto; gap:8px;">
-        <button type="button" onClick="{{ addReport }}" aria-pressed="{{ added }}" style="height:44px; border-radius:999px; border:0; background:{{ addBg }}; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;" style-hover="filter:brightness(0.94);">
+      <div style="flex:none; padding:12px 20px 16px; border-top:1px solid #E3E6E1; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px;">
+        <button type="button" onClick="{{ addReport }}" aria-pressed="{{ added }}" style="height:44px; padding:0 12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; border-radius:999px; border:0; background:{{ addBg }}; color:#FFFFFF; font-size:14px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;" style-hover="filter:brightness(0.94);">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ addIcon }}"></path></svg>{{ addLabel }}
         </button>
-        <button type="button" onClick="{{ addMission }}" style="height:44px; padding:0 16px; border-radius:999px; border:1px solid #D5DAD3; background:#FFFFFF; color:#1A1F1D; font-size:15px; font-weight:500; cursor:pointer;" style-hover="background:#F7F8F6;">{{ missionLabel }}</button>
+        <button type="button" onClick="{{ addMission }}" style="height:44px; padding:0 12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; border-radius:999px; border:1px solid #D5DAD3; background:#FFFFFF; color:#1A1F1D; font-size:14px; font-weight:500; cursor:pointer;" style-hover="background:#F7F8F6;">{{ missionLabel }}</button>
       </div>
     </aside>
-  </div>
+  </main>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;embedded&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;alertCode&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;string&quot;}, &quot;onClose&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;() =&gt; void&quot;}, &quot;onMission&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;(code: string) =&gt; void&quot;}}">
@@ -205,7 +218,7 @@ class Component extends DCLogic {
     // grille en filet 1 px, légende + étiquettes directes en bout de ligne, réticule + info-bulle au survol.
     const h = React.createElement, W = 332, H = 168, x0 = 30, x1 = 268, yTop = 16, yBot = 136;
     const ZC = '#C2399A', RC = '#2F9E6E';
-    if (!d || !d.series.points.length) return h('div', { style: { height: 60, display: 'grid', placeItems: 'center', fontSize: 13, color: '#6B7570' } }, 'Série NDVI indisponible');
+    if (!d || !d.series.points.length) return h('div', { style: { height: 60, display: 'grid', placeItems: 'center', fontSize: 13, color: '#5E6863' } }, 'Série NDVI indisponible');
     const C = window.CIREX, pts = d.series.points, S = d.summary;
     const t = s => Date.parse(String(s).slice(0, 10) + 'T00:00:00Z');
     const tA = t(pts[0].date), tB = t(pts[pts.length - 1].date);
@@ -224,7 +237,7 @@ class Component extends DCLogic {
     const svg = h('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'NDVI moyen des zones de changement et de la végétation stable, ' + C.monthFr(pts[0].date) + ' à ' + C.monthFr(pts[pts.length - 1].date), style: { width: '100%', height: 'auto', display: 'block', touchAction: 'none' }, onPointerMove: onMove, onPointerLeave: () => this.setState({ hov: null }) },
       band(S.avant.periode, 'rgba(47,158,110,0.10)', 'avant'), band(S.apres.periode, 'rgba(194,57,154,0.10)', 'après'), grid,
       yrs.map(y => { const xx = X(y + '-01-01'); return [h('line', { key: 'y' + y, x1: xx, x2: xx, y1: yBot, y2: yBot + 4, stroke: '#9AA39E', strokeWidth: 1 }), h('text', { key: 'yt' + y, x: xx, y: yBot + 15, fontFamily: 'Geist, sans-serif', fontSize: 10, fill: '#4F5853', textAnchor: 'middle' }, String(y))]; }).filter((_, i) => yrs.length < 7 || i % 2 === 0),
-      fx ? [h('line', { key: 'f', x1: fx, x2: fx, y1: yTop, y2: yBot, stroke: '#6B7570', strokeWidth: 1 }), h('text', { key: 'ft', x: Math.min(fx + 4, x1 - 100), y: yTop + 12, fontFamily: 'Geist, sans-serif', fontSize: 10, fill: '#33413B' }, '1re baisse · ' + C.monthFr(first))] : null,
+      fx ? [h('line', { key: 'f', x1: fx, x2: fx, y1: yTop, y2: yBot, stroke: '#5E6863', strokeWidth: 1 }), h('text', { key: 'ft', x: Math.min(fx + 4, x1 - 100), y: yTop + 12, fontFamily: 'Geist, sans-serif', fontSize: 10, fill: '#33413B' }, '1re baisse · ' + C.monthFr(first))] : null,
       h('path', { d: path('ndvi_reference'), fill: 'none', stroke: RC, strokeWidth: 2, strokeLinejoin: 'round', strokeLinecap: 'round' }),
       h('path', { d: path('ndvi_zones'), fill: 'none', stroke: ZC, strokeWidth: 2, strokeLinejoin: 'round', strokeLinecap: 'round' }),
       endLab(lr, 'ndvi_reference', RC, 'réf.'), endLab(lz, 'ndvi_zones', ZC, 'zones'),
@@ -256,7 +269,7 @@ class Component extends DCLogic {
       noData: s.loaded && !d, dataPath: (C && C.config.dataset) || 'data/…',
       totalTxt: S ? fr(S.surface_totale_ha, 1) : '—', footTxt: S ? fr(S.terrains_de_football, 0) : '—',
       zonesTxt: S ? S.n_zones + ' zone' + (S.n_zones > 1 ? 's' : '') + ' · baisse moyenne du NDVI ' + fr(S.signal_moyen, 2) + ' · rayon ' + fr(S.aoi.rayon_m / 1000, 0) + ' km' : '',
-      zones: zones.slice(0, SHOWN).map(z => ({ n: z.n, type: z.type, ha: fr(z.ha, 1), sig: fr(z.signal, 2), sigW: Math.round(z.signal * 100) + '%', first: z.first ? C.monthFr(z.first) : 'date non confirmée', enter: () => this.call('highlight', z.n), leave: () => this.call('highlight', 0) })),
+      zones: zones.slice(0, SHOWN).map(z => ({ n: z.n, type: z.type, ha: fr(z.ha, 1), sig: fr(z.signal, 2), sigW: Math.round(z.signal * 100) + '%', first: z.first ? 'depuis ' + C.monthFr(z.first) : 'date non confirmée', enter: () => this.call('highlight', z.n), leave: () => this.call('highlight', 0) })),
       hasMore: rest.length > 0, moreTxt: '+ ' + rest.length + ' autres zones · ' + fr(restHa, 1) + ' ha (survol sur la carte)',
       seriesSpan: pts.length ? C.monthFr(pts[0].date) + ' → ' + C.monthFr(pts[pts.length - 1].date) : '—',
       dropTxt: zA != null && zB != null ? 'zones : ' + fr(zA, 2) + ' → ' + fr(zB, 2) : '',
@@ -272,7 +285,7 @@ class Component extends DCLogic {
       hasLegend: s.mode === 'changements' || s.index !== 'naturel', legend: s.mode === 'changements' ? LEG.changements : LEG.vegetation,
       zoomIn: () => this.call('zoomIn'), zoomOut: () => this.call('zoomOut'), recenter: () => this.call('recenter'),
       added: !!s.report, addReport: () => this.addReport(),
-      addBg: s.report ? '#1E6E4C' : '#2F9E6E', addLabel: s.busy ? 'Enregistrement…' : s.report ? 'Rapport ' + s.report + ' · ouvrir' : 'Ajouter au rapport',
+      addBg: s.report ? '#155238' : '#1F7A53', addLabel: s.busy ? 'Enregistrement…' : s.report ? 'Rapport ' + s.report + ' · ouvrir' : 'Ajouter au rapport',
       addIcon: s.report ? 'M20 6 9 17l-5-5' : 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4M9 15h6M12 18v-6',
       addMission: () => this.addMission(), missionLabel: s.mission ? 'Mission ' + s.mission : 'Créer une mission'
     };

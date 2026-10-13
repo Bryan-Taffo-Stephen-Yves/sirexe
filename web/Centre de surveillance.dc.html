@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="utf-8">
+<title>Centre de surveillance · Cirex</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
 </head>
@@ -56,7 +57,7 @@
         </button>
       </sc-for>
       <div style="flex:1;"></div>
-      <button type="button" onClick="{{ toggleNav }}" aria-label="{{ navBtnLabel }}" title="{{ navBtnLabel }}" style="display:flex; align-items:center; gap:12px; height:40px; padding:0 12px; border-radius:12px; border:0; background:transparent; color:#6B7570; cursor:pointer; white-space:nowrap;" style-hover="background:#F3F4F1; color:#1A1F1D;">
+      <button type="button" onClick="{{ toggleNav }}" aria-label="{{ navBtnLabel }}" title="{{ navBtnLabel }}" style="display:flex; align-items:center; gap:12px; height:40px; padding:0 12px; border-radius:12px; border:0; background:transparent; color:#5E6863; cursor:pointer; white-space:nowrap;" style-hover="background:#F3F4F1; color:#1A1F1D;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg>
         <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;">Replier</span></sc-if>
       </button>
@@ -67,18 +68,18 @@
     <header style="flex:none; height:64px; display:flex; align-items:center; gap:14px; padding:0 16px 0 20px; box-sizing:border-box;">
       <div style="display:flex; flex-direction:column; gap:3px; min-width:0;">
         <h1 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-weight:500; font-size:26px; line-height:1.05; letter-spacing:-0.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ viewTitle }}</h1>
-        <div style="font-size:12px; color:#6B7570; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Cirex · Prototype · BRENT GROUP · SIREXE 2026 · sans affiliation officielle</div>
+        <div style="font-size:12px; color:#5E6863; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Prototype · BRENT GROUP · SIREXE 2026</div>
       </div>
       <div style="flex:1;"></div>
-      <span style="display:inline-flex; align-items:center; gap:6px; height:30px; padding:0 10px; border-radius:999px; border:1px dashed #C99A1A; color:#7A5C00; background:#FBF6E6; font-size:13px; font-weight:500; white-space:nowrap;">
+      <span style="display:{{ hdr.badge }}; align-items:center; gap:6px; height:30px; padding:0 10px; border-radius:999px; border:1px dashed #C99A1A; color:#7A5C00; background:#FBF6E6; font-size:13px; font-weight:500; white-space:nowrap;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path></svg>
         Fictif sauf Kokumbo et PH-CI-003
       </span>
       <div style="display:{{ hdr.clock }}; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:13px; color:#4F5853; white-space:nowrap;">{{ clockTxt }}</div>
       <div style="display:inline-flex; flex:none; align-items:center; gap:8px; height:32px; padding:0 12px; border-radius:999px; background:#FFFFFF; border:1px solid #E3E6E1; font-size:13px; font-weight:500; white-space:nowrap;">{{ liveDot }}<span style="display:{{ hdr.live }};">{{ rtTxt }}</span></div>
-      <label style="display:flex; align-items:center; gap:8px; width:250px; min-width:150px; flex-shrink:1; height:36px; padding:0 8px 0 12px; box-sizing:border-box; border-radius:999px; background:#FFFFFF; border:1px solid #E3E6E1; color:#6B7570; cursor:text;">
+      <label style="display:{{ hdr.search }}; align-items:center; gap:8px; width:250px; min-width:150px; flex-shrink:1; height:36px; padding:0 8px 0 12px; box-sizing:border-box; border-radius:999px; background:#FFFFFF; border:1px solid #E3E6E1; color:#5E6863; cursor:text;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" style="flex:none;"><circle cx="11" cy="11" r="7.5"></circle><path d="m20.5 20.5-4.2-4.2"></path></svg>
-        <input ref="{{ searchRef }}" value="{{ searchQ }}" onChange="{{ onSearchChange }}" onKeyDown="{{ onSearchKey }}" placeholder="Rechercher un site, un capteur, un permis…" aria-label="Recherche globale" style="flex:1; min-width:0; border:0; outline:none; background:transparent; font-size:14px; color:#1A1F1D;">
+        <input ref="{{ searchRef }}" value="{{ searchQ }}" onChange="{{ onSearchChange }}" onKeyDown="{{ onSearchKey }}" placeholder="Rechercher…" title="Rechercher un site, un capteur, un permis" aria-label="Recherche globale" style="flex:1; min-width:0; border:0; outline:none; background:transparent; font-size:14px; color:#1A1F1D;">
         <span style="flex:none; font-family:'IBM Plex Mono', monospace; font-size:12px; color:#4F5853; border:1px solid #E3E6E1; border-radius:6px; padding:2px 5px;">⌘K</span>
       </label>
       <button type="button" onClick="{{ goAlertes }}" aria-label="{{ bellLabel }}" title="{{ bellLabel }}" style="position:relative; width:40px; height:40px; flex:none; border-radius:50%; border:1px solid #E3E6E1; background:#FFFFFF; display:grid; place-items:center; color:#1A1F1D; cursor:pointer;" style-hover="background:#F7F8F6;">
@@ -87,7 +88,7 @@
       </button>
       <div style="display:flex; align-items:center; gap:10px; flex:none;">
         <span style="width:38px; height:38px; border-radius:50%; background:#DCEFE4; color:#1E6E4C; display:grid; place-items:center; font-size:14px; font-weight:600;">SA</span>
-        <span style="display:{{ hdr.user }}; flex-direction:column; line-height:1.2;"><span style="font-size:14px; font-weight:600; white-space:nowrap;">Stephen Affo</span><span style="font-size:12px; color:#6B7570;">Superviseur</span></span>
+        <span style="display:{{ hdr.user }}; flex-direction:column; line-height:1.2;"><span style="font-size:14px; font-weight:600; white-space:nowrap;">Stephen Affo</span><span style="font-size:12px; color:#5E6863;">Superviseur</span></span>
       </div>
     </header>
 
@@ -250,7 +251,7 @@
                   </sc-if>
                 </div>
                 <div style="display:flex; flex-direction:column; gap:6px;">
-                  <button type="button" onClick="{{ openCompare }}" disabled="{{ card.noCompare }}" style="height:38px; border-radius:999px; border:0; background:#2F9E6E; color:#FFFFFF; font-size:14px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; opacity:{{ card.cmpOpacity }};" style-hover="background:#278A5F;" style-active="background:#1E6E4C;">
+                  <button type="button" onClick="{{ openCompare }}" disabled="{{ card.noCompare }}" style="height:38px; border-radius:999px; border:0; background:#1F7A53; color:#FFFFFF; font-size:14px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; opacity:{{ card.cmpOpacity }};" style-hover="background:#1A6A48;" style-active="background:#1E6E4C;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M12 3v18"></path></svg>
                     Comparer avant / après
                   </button>
@@ -270,13 +271,13 @@
             <span style="flex:none; width:28px; height:28px; border-radius:9px; background:#E3F3F9; color:#1D6F8C; display:grid; place-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></span>
             <h2 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:18px; font-weight:500; white-space:nowrap;">{{ T.live }}</h2>
             <button type="button" title="Changer de capteur" style="flex:none; height:30px; display:flex; align-items:center; gap:6px; padding:0 10px; border-radius:999px; border:1px solid #E3E6E1; background:#F7F8F6; color:#1A1F1D; cursor:pointer; font-size:13px; white-space:nowrap;" style-hover="background:#EEF0ED;">
-              <span style="font-family:'IBM Plex Mono', monospace; font-weight:500;">PH-CI-003</span><span style="color:#4F5853;">· Kokumbo</span>
+              <span style="font-family:'IBM Plex Mono', monospace; font-weight:500;">PH-CI-003</span><span style="color:#4F5853; display:{{ hdr.loc }};">· Kokumbo</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;"><path d="m6 9 6 6 6-6"></path></svg>
             </button>
             <div style="flex:1;"></div>
             <span title="{{ demoBadgeTip }}" style="flex:none; display:inline-flex; align-items:center; gap:6px; height:26px; padding:0 9px; border-radius:999px; background:{{ badge.bg }}; border:1px {{ badge.bd }}; color:{{ badge.fg }}; font-size:12px; font-weight:600; white-space:nowrap;">{{ demoBadge }}</span>
           </div>
-          <div style="flex:1; min-height:0; display:flex; gap:14px;">
+          <div style="flex:1; min-height:0; display:flex; flex-direction:{{ hdr.liveDir }}; align-items:{{ hdr.liveAlign }}; gap:14px;">
             <div style="flex:none; width:206px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
               <div style="position:relative; width:206px; height:124px;">
                 <svg width="206" height="124" viewBox="0 0 240 144" aria-hidden="true">
@@ -298,22 +299,22 @@
                 <span style="display:inline-flex; align-items:center; gap:5px; height:22px; padding:0 8px; border-radius:999px; background:{{ g.pillBg }}; color:{{ g.pillFg }}; font-size:12px; font-weight:600;"><span style="width:7px; height:7px; border-radius:50%; background:{{ g.color }};"></span>{{ g.state }}</span>
               </div>
               <div style="display:flex; gap:18px; margin-top:4px;">
-                <span style="display:flex; align-items:baseline; gap:4px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:22px;">{{ g.max }}</span><span style="font-size:13px; color:#6B7570;">Max</span></span>
-                <span style="display:flex; align-items:baseline; gap:4px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:22px;">{{ g.min }}</span><span style="font-size:13px; color:#6B7570;">Min</span></span>
-                <span style="display:flex; align-items:baseline; gap:4px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:22px;">{{ g.moy }}</span><span style="font-size:13px; color:#6B7570;">Moy</span></span>
+                <span style="display:flex; align-items:baseline; gap:4px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:22px;">{{ g.max }}</span><span style="font-size:13px; color:#5E6863;">Max</span></span>
+                <span style="display:flex; align-items:baseline; gap:4px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:22px;">{{ g.min }}</span><span style="font-size:13px; color:#5E6863;">Min</span></span>
+                <span style="display:flex; align-items:baseline; gap:4px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:22px;">{{ g.moy }}</span><span style="font-size:13px; color:#5E6863;">Moy</span></span>
               </div>
-              <span style="font-size:12px; color:#6B7570;">Fenêtre glissante de 10 min · seuil d’alerte 60</span>
+              <span style="font-size:12px; color:#5E6863;">Fenêtre glissante de 10 min · seuil d’alerte 60</span>
             </div>
             <div style="flex:1; min-width:0; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); grid-template-rows:repeat(2, minmax(0, 1fr)); gap:8px;">
               <sc-for list="{{ meas }}" as="m" hint-placeholder-count="4">
                 <div style="min-width:0; min-height:0; border-radius:12px; background:#F7F8F6; border:1px solid #ECEEEA; padding:9px 10px 6px; box-sizing:border-box; display:flex; flex-direction:column; gap:2px; overflow:hidden;">
-                  <span style="font-size:14px; color:#4F5853; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ m.label }}</span>
+                  <span style="flex:none; font-size:14px; line-height:18px; color:#4F5853; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ m.label }}</span>
                   <div style="display:flex; align-items:baseline; gap:4px; min-width:0;">
-                    <span style="font-family:'Source Serif 4', Georgia, serif; font-size:36px; line-height:1.02; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; color:#1A1F1D;">{{ m.val }}</span>
+                    <span style="font-family:'Source Serif 4', Georgia, serif; font-size:{{ hdr.tileFs }}; line-height:1.02; letter-spacing:-0.02em; color:#1A1F1D;">{{ m.val }}</span>
                     <span style="font-size:14px; color:#4F5853;">{{ m.unit }}</span>
                   </div>
-                  <svg viewBox="0 0 120 26" preserveAspectRatio="none" aria-hidden="true" style="width:100%; height:20px; flex:none; margin-top:auto;"><path d="{{ m.area }}" fill="{{ m.fill }}"></path><path d="{{ m.line }}" fill="none" stroke="{{ m.stroke }}" stroke-width="1.6" vector-effect="non-scaling-stroke"></path></svg>
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;"><span style="font-size:12px; color:#4F5853; white-space:nowrap;">Réf. {{ m.ref }}</span><span style="flex:none; height:20px; padding:0 6px; border-radius:999px; background:{{ m.pillBg }}; color:{{ m.pillFg }}; font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:500; line-height:20px; white-space:nowrap;">{{ m.dev }}</span></div>
+                  <svg viewBox="0 0 120 26" preserveAspectRatio="none" aria-hidden="true" style="width:100%; height:{{ hdr.sparkH }}; flex:none; margin-top:auto;"><path d="{{ m.area }}" fill="{{ m.fill }}"></path><path d="{{ m.line }}" fill="none" stroke="{{ m.stroke }}" stroke-width="1.6" vector-effect="non-scaling-stroke"></path></svg>
+                  <div style="flex:none; display:flex; align-items:center; justify-content:space-between; gap:6px; min-width:0;"><span style="min-width:0; font-size:12px; color:#4F5853; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Réf. {{ m.ref }}</span><span style="flex:none; height:20px; padding:0 6px; border-radius:999px; background:{{ m.pillBg }}; color:{{ m.pillFg }}; font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:500; line-height:20px; white-space:nowrap;">{{ m.dev }}</span></div>
                 </div>
               </sc-for>
             </div>
@@ -326,7 +327,7 @@
               <span style="flex:none; width:28px; height:28px; border-radius:9px; background:#EEF5F0; color:#1E6E4C; display:grid; place-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.531 12.469 6.619 20.38a1 1 0 1 1-3-3l7.912-7.912"></path><path d="M15.686 4.314A12.5 12.5 0 0 0 5.461 2.958 1 1 0 0 0 5.58 4.71a22 22 0 0 1 6.318 3.393"></path><path d="M17.7 3.7a1 1 0 0 0-1.4 0l-4.6 4.6a1 1 0 0 0 0 1.4l2.6 2.6a1 1 0 0 0 1.4 0l4.6-4.6a1 1 0 0 0 0-1.4z"></path><path d="M19.686 8.314a12.501 12.501 0 0 1 1.356 10.225 1 1 0 0 1-1.751-.119 22 22 0 0 0-3.393-6.319"></path></svg></span>
               <h2 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:18px; font-weight:500; white-space:nowrap;">Sites suivis</h2><span style="flex:none; height:20px; padding:0 7px; border-radius:999px; border:1px dashed #C99A1A; background:#FBF6E6; color:#7A5C00; font-size:11px; font-weight:600; line-height:18px;">fictif</span>
             </div>
-            <div style="display:flex; align-items:baseline; gap:6px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:56px; line-height:0.95; letter-spacing:-0.03em;">247</span><span style="font-size:14px; color:#6B7570;">sites</span></div>
+            <div style="display:flex; align-items:baseline; gap:6px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:56px; line-height:0.95; letter-spacing:-0.03em;">247</span><span style="font-size:14px; color:#5E6863;">sites</span></div>
             <sc-if value="{{ L.isA }}" hint-placeholder-val="{{ true }}"><span style="font-size:14px; color:#4F5853; white-space:nowrap;">61 légaux · 152 illégaux · 34 suspects</span></sc-if>
           </div>
           <div style="flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:9px;">
@@ -338,12 +339,12 @@
               <span style="flex:1; background:#A9B5C5;"></span>
             </div>
             <sc-if value="{{ L.isA }}" hint-placeholder-val="{{ true }}">
-              <div style="display:grid; grid-template-columns:12px minmax(0, 1fr) auto auto; column-gap:10px; row-gap:1px; align-items:center; font-size:14px; line-height:18px;">
-                <span style="width:12px; height:12px; border-radius:3px; background:#2F9E6E;"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Légal</span><span style="text-align:right; font-weight:600; font-variant-numeric:tabular-nums;">49</span><span style="text-align:right; color:#4F5853; font-variant-numeric:tabular-nums;">412,5 ha</span>
-                <span style="width:12px; height:12px; border-radius:3px; background:repeating-linear-gradient(-45deg, #E07B39 0 2px, #F6D3BC 2px 4px);"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Non conforme</span><span style="text-align:right; font-weight:600;">12</span><span style="text-align:right; color:#4F5853;">96,3 ha</span>
-                <span style="width:12px; height:12px; box-sizing:border-box; border-radius:3px; border:2px dashed #C99A1A; background:#FBF1CF;"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Suspect</span><span style="text-align:right; font-weight:600;">34</span><span style="text-align:right; color:#4F5853;">58,7 ha</span>
-                <span style="width:12px; height:12px; border-radius:3px; background:repeating-linear-gradient(45deg, #D64545 0 2.5px, #F0BDBD 2.5px 5px);"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Illégal</span><span style="text-align:right; font-weight:600;">131</span><span style="text-align:right; color:#4F5853;">1 284,0 ha</span>
-                <span style="width:12px; height:12px; border-radius:3px; background:#A9B5C5;"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Démantelé</span><span style="text-align:right; font-weight:600;">21</span><span style="text-align:right; color:#4F5853;">143,2 ha</span>
+              <div style="display:grid; grid-template-columns:{{ hdr.legCols }}; column-gap:10px; row-gap:1px; align-items:center; font-size:14px; line-height:18px;">
+                <span style="width:12px; height:12px; border-radius:3px; background:#2F9E6E;"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Légal</span><span style="text-align:right; font-weight:600; font-variant-numeric:tabular-nums;">49</span><span style="text-align:right; color:#4F5853; display:{{ hdr.legHa }}; font-variant-numeric:tabular-nums;">412,5 ha</span>
+                <span style="width:12px; height:12px; border-radius:3px; background:repeating-linear-gradient(-45deg, #E07B39 0 2px, #F6D3BC 2px 4px);"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Non conforme</span><span style="text-align:right; font-weight:600;">12</span><span style="text-align:right; color:#4F5853; display:{{ hdr.legHa }};">96,3 ha</span>
+                <span style="width:12px; height:12px; box-sizing:border-box; border-radius:3px; border:2px dashed #C99A1A; background:#FBF1CF;"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Suspect</span><span style="text-align:right; font-weight:600;">34</span><span style="text-align:right; color:#4F5853; display:{{ hdr.legHa }};">58,7 ha</span>
+                <span style="width:12px; height:12px; border-radius:3px; background:repeating-linear-gradient(45deg, #D64545 0 2.5px, #F0BDBD 2.5px 5px);"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Illégal</span><span style="text-align:right; font-weight:600;">131</span><span style="text-align:right; color:#4F5853; display:{{ hdr.legHa }};">1 284,0 ha</span>
+                <span style="width:12px; height:12px; border-radius:3px; background:#A9B5C5;"></span><span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Démantelé</span><span style="text-align:right; font-weight:600;">21</span><span style="text-align:right; color:#4F5853; display:{{ hdr.legHa }};">143,2 ha</span>
               </div>
             </sc-if>
             <sc-if value="{{ L.isB }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px; line-height:1.3; color:#4F5853;">61 légaux · 152 illégaux · 34 suspects</span></sc-if>
@@ -381,9 +382,9 @@
             </sc-if>
             <sc-if value="{{ L.isA }}" hint-placeholder-val="{{ true }}"><a href="#" onClick="{{ goAlertes }}" style="font-size:14px; font-weight:500; white-space:nowrap;">Voir toutes les alertes</a></sc-if>
           </div>
-          <div role="table" aria-label="Alertes récentes" style="flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column;">
+          <div role="list" aria-label="Alertes récentes" tabindex="0" style="flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column;">
             <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="5">
-              <div role="row" onClick="{{ a.open }}" style="position:relative; flex:none; display:grid; grid-template-columns:{{ L.alertCols }}; align-items:center; column-gap:8px; min-height:52px; padding:6px 8px 6px 14px; border-bottom:1px solid #EEF0ED; background:{{ a.bg }}; cursor:{{ a.cursor }}; border-radius:10px;" style-hover="background:#F7F8F6;">
+              <div role="listitem" onClick="{{ a.open }}" style="position:relative; flex:none; display:grid; grid-template-columns:{{ L.alertCols }}; align-items:center; column-gap:8px; min-height:52px; padding:6px 8px 6px 14px; border-bottom:1px solid #EEF0ED; background:{{ a.bg }}; cursor:{{ a.cursor }}; border-radius:10px;" style-hover="background:#F7F8F6;">
                 <span style="position:absolute; left:2px; top:9px; bottom:9px; width:4px; border-radius:999px; background:{{ a.edgeColor }};"></span>
                 {{ a.edge }}
                 <div style="min-width:0; display:flex; flex-direction:column; gap:2px;">
@@ -425,7 +426,7 @@
             <span style="flex:none; font-family:'Source Serif 4', Georgia, serif; font-size:48px; line-height:1; letter-spacing:-0.02em;">7</span>
             <span style="min-width:0; font-size:14px; line-height:1.25; color:#4F5853;">{{ T.feuxCap }}</span>
           </div>
-          <span style="display:{{ T.feuxFoot }}; font-size:12px; color:#6B7570; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Points fictifs · couche NASA FIRMS à brancher</span>
+          <span style="display:{{ T.feuxFoot }}; font-size:12px; color:#5E6863; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Points fictifs · couche NASA FIRMS à brancher</span>
         </section>
 
         <section aria-label="Synthèse automatique" style="grid-area:{{ L.a.assistant }}; min-height:{{ L.h.assistant }}; display:{{ L.dS }}; background:linear-gradient(165deg, #E6F4EC 0%, #F4FAF6 38%, #FFFFFF 70%); border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:14px 14px 10px; box-sizing:border-box; flex-direction:column; gap:8px; min-width:0; overflow:hidden;">
@@ -440,7 +441,7 @@
               </div>
             </sc-if>
           </div>
-          <div style="flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column; gap:8px;">
+          <div tabindex="0" aria-label="Synthèse" style="flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column; gap:8px;">
             <div style="padding:10px 12px; border-radius:14px 14px 14px 4px; background:#FFFFFF; border:1px solid #E3E6E1; font-size:14px; line-height:1.4; color:#1A1F1D;">
               <div style="font-weight:600; margin-bottom:4px;">{{ ai.head }}</div>
               <ul style="margin:0; padding-left:18px; display:flex; flex-direction:column; gap:3px;">
@@ -448,7 +449,7 @@
               </ul>
             </div>
           </div>
-          <span style="flex:none; font-size:12px; line-height:1.4; color:#6B7570;">Texte produit par des règles fixes à partir des mesures et du calcul Sentinel-2. Pas de modèle d’IA. À vérifier sur le terrain.</span>
+          <span style="flex:none; font-size:12px; line-height:1.4; color:#5E6863;">Texte produit par des règles fixes à partir des mesures et du calcul Sentinel-2. Pas de modèle d’IA. À vérifier sur le terrain.</span>
         </section>
       </div>
     </main>
@@ -552,7 +553,7 @@
                 </sc-for>
               </div>
             </sc-if>
-            <label style="display:flex; align-items:center; gap:8px; width:280px; max-width:100%; height:36px; padding:0 12px; box-sizing:border-box; border-radius:999px; background:#F7F8F6; border:1px solid #E3E6E1; color:#6B7570; cursor:text;">
+            <label style="display:flex; align-items:center; gap:8px; width:280px; max-width:100%; height:36px; padding:0 12px; box-sizing:border-box; border-radius:999px; background:#F7F8F6; border:1px solid #E3E6E1; color:#5E6863; cursor:text;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" style="flex:none;"><circle cx="11" cy="11" r="7.5"></circle><path d="m20.5 20.5-4.2-4.2"></path></svg>
               <input value="{{ lv.q }}" onChange="{{ lv.onQ }}" placeholder="{{ lv.ph }}" aria-label="{{ lv.ph }}" style="flex:1; min-width:0; border:0; outline:none; background:transparent; font-size:14px; color:#1A1F1D;">
             </label>
@@ -651,14 +652,14 @@
           </div>
         </div>
         <div style="display:grid; grid-template-columns:1fr auto; gap:8px;">
-          <button type="button" onClick="{{ launch }}" style="height:40px; border-radius:999px; border:0; background:#2F9E6E; color:#FFFFFF; font-size:14px; font-weight:600; cursor:pointer;" style-hover="background:#278A5F;" style-active="background:#1E6E4C;">Lancer la séquence · D</button>
+          <button type="button" onClick="{{ launch }}" style="height:40px; border-radius:999px; border:0; background:#1F7A53; color:#FFFFFF; font-size:14px; font-weight:600; cursor:pointer;" style-hover="background:#1A6A48;" style-active="background:#1E6E4C;">Lancer la séquence · D</button>
           <button type="button" onClick="{{ resetAll }}" style="height:40px; padding:0 14px; border-radius:999px; border:1px solid #D5DAD3; background:#FFFFFF; color:#1A1F1D; font-size:14px; font-weight:500; cursor:pointer;" style-hover="background:#F7F8F6;">Réinitialiser · R</button>
         </div>
         <div style="display:flex; align-items:center; justify-content:space-between; font-size:13px; color:#4F5853;">
           <span style="display:flex; align-items:center; gap:6px;"><span style="width:8px; height:8px; border-radius:50%; background:{{ netDot }};"></span>{{ netTxt }}</span>
           <button type="button" onClick="{{ toggleMute }}" aria-pressed="{{ muted }}" style="height:28px; padding:0 10px; border-radius:999px; border:1px solid #E3E6E1; background:#F7F8F6; font-size:12px; color:#1A1F1D; cursor:pointer;">{{ muteLabel }}</button>
         </div>
-        <span style="font-size:12px; color:#6B7570;">Maj + D : ouvrir / fermer ce panneau · Échap : fermer</span>
+        <span style="font-size:12px; color:#5E6863;">Maj + D : ouvrir / fermer ce panneau · Échap : fermer</span>
       </div>
     </sc-if>
 
@@ -976,6 +977,9 @@ class Component extends DCLogic {
   }
   layoutBase(comp, w, bTab) {
     const zero = { map: '0', live: '0', alertes: '0', assistant: '0', kpi: '0' };
+    if (w && w < 700) return { key: 'T', alertCols: 'minmax(0, 1fr) 54px 118px', alertRel: 'none', cols: 'minmax(0, 1fr)', rows: 'none', gridH: 'auto', overflow: 'auto', flow: 'row', isA: true, isB: false, dA: 'flex', dS: 'flex',
+      a: { map: 'auto', live: 'auto', sites: 'auto', alertesK: 'auto', surface: 'auto', missions: 'auto', capteurs: 'auto', alertes: 'auto', feux: 'auto', assistant: 'auto' },
+      h: { map: '420px', live: '560px', alertes: '380px', assistant: '320px', kpi: '120px' } };
     if (w && w < 1180) return { key: 'T', alertCols: 'minmax(0, 1fr) 60px 84px 140px', alertRel: 'block', cols: 'repeat(2, minmax(0, 1fr))', rows: 'none', gridH: 'auto', overflow: 'auto', flow: 'row dense', isA: true, isB: false, dA: 'flex', dS: 'flex',
       a: { map: 'auto / span 2', live: 'auto / span 2', sites: 'auto / span 2', alertesK: 'auto / span 1', surface: 'auto / span 1', missions: 'auto / span 1', capteurs: 'auto / span 1', alertes: 'auto / span 2', feux: 'auto / span 2', assistant: 'auto / span 2' },
       h: { map: '520px', live: '330px', alertes: '380px', assistant: '360px', kpi: '128px' } };
@@ -1205,7 +1209,7 @@ class Component extends DCLogic {
     const gsmBits = []; if (st.operator) gsmBits.push(String(st.operator)); if (st.csq !== undefined) gsmBits.push('signal ' + st.csq + '/31');
     const warnUrl = cfg.mode === 'ws' ? cfg.ws || '' : this.espBase();
     return {
-      strip: s.view === 'apercu', sub: !e.on ? 'Cliquer pour connecter' : e.sim ? 'Simulation · données inventées' : (cfg.mode === 'ws' ? cfg.ws : this.espBase().replace(/^https?:\/\//, '')),
+      strip: s.view === 'apercu' && (s.demoSource === 'reel' || e.on), // bandeau seulement quand l'ESP32 local sert sub: !e.on ? 'Cliquer pour connecter' : e.sim ? 'Simulation · données inventées' : (cfg.mode === 'ws' ? cfg.ws : this.espBase().replace(/^https?:\/\//, '')),
       stripTiles: tiles.slice(0, 5).concat([smsTile]), tiles,
       cols: L.key === 'T' ? 'minmax(0, 1fr)' : 'minmax(0, 1fr) 380px', gridH: L.key === 'T' ? 'auto' : '100%',
       hasImg: !!src, noImg: !src, emptyTitle, emptySub,
@@ -1216,7 +1220,7 @@ class Component extends DCLogic {
       isHttp: cfg.mode === 'http', isWs: cfg.mode === 'ws', isSim: cfg.mode === 'sim',
       host: cfg.host, onHost: ev => this.espSet('host', ev.target.value), streamOv: cfg.stream, onStream: ev => this.espSet('stream', ev.target.value), streamPh: this.espStream() || 'http://192.168.4.1:81/stream',
       ws: cfg.ws, onWs: ev => this.espSet('ws', ev.target.value),
-      toggle: () => { if (e.on) this.espStop(); else this.espConnect(); }, btnLabel: e.on ? 'Déconnecter' : 'Connecter', btnBg: e.on ? '#FFFFFF' : '#2F9E6E', btnFg: e.on ? '#1A1F1D' : '#FFFFFF', btnBd: e.on ? '#D5DAD3' : '#2F9E6E',
+      toggle: () => { if (e.on) this.espStop(); else this.espConnect(); }, btnLabel: e.on ? 'Déconnecter' : 'Connecter', btnBg: e.on ? '#FFFFFF' : '#1F7A53', btnFg: e.on ? '#1A1F1D' : '#FFFFFF', btnBd: e.on ? '#D5DAD3' : '#1F7A53',
       helpOpen: !!e.help, toggleHelp: () => { e.help = !e.help; this.setState({ espTick: Date.now() }); }, help: ESP_HELP,
       hasErr: !!(e.on && !e.sim && e.err), err: e.err,
       hasWarn: cfg.mode !== 'sim' && location.protocol === 'https:' && /^(http|ws):/i.test(warnUrl), warn: 'Cette page est servie en https : le navigateur refusera de joindre ' + warnUrl + '. Pour la démo, ouvrez le fichier téléchargé en local sur un ordinateur relié au même Wi-Fi que l’ESP32.',
@@ -1296,7 +1300,7 @@ class Component extends DCLogic {
     } else if (key === 'rapports') {
       v.head = ['Rapport', 'Type', 'Mis à jour', 'Statut', 'Export']; v.cols = 'minmax(130px, 1.6fr) minmax(130px, 1fr) 120px 130px 150px';
       const dbr = s.dbReports.map(r => { const d = new Date(r.updated_at); return { id: r.code, title: r.title, type: r.kind, date: d.getDate() + ' ' + MONTHS[d.getMonth()], st: r.status, real: true }; });
-      v.items = dbr.concat(REPORTS.map(r => Object.assign({}, r, { fictif: true }))).map(r => R(r, [TX(r.title, { w: 600, sub: r.id + (r.fictif ? ' · fictif' : '') }), TX(r.type), TX(r.date), PL(RPT_P[r.st] || RPT_P.brouillon), r.real ? BT('Ouvrir · PDF', e => { if (e) e.stopPropagation(); window.open('rapport.html?code=' + encodeURIComponent(r.id), '_blank', 'noopener'); }) : TX('exemple', { color: '#6B7570' })]));
+      v.items = dbr.concat(REPORTS.map(r => Object.assign({}, r, { fictif: true }))).map(r => R(r, [TX(r.title, { w: 600, sub: r.id + (r.fictif ? ' · fictif' : '') }), TX(r.type), TX(r.date), PL(RPT_P[r.st] || RPT_P.brouillon), r.real ? BT('Ouvrir · PDF', e => { if (e) e.stopPropagation(); window.open('rapport.html?code=' + encodeURIComponent(r.id), '_blank', 'noopener'); }) : TX('exemple', { color: '#5E6863' })]));
       v.sum = its => its.length + ' rapports · ' + dbr.length + ' enregistré' + (dbr.length > 1 ? 's' : '') + ' sur le serveur';
     } else if (key === 'equipe') {
       v.head = ['Nom', 'Zone', 'Statut', 'Mission', 'Dernière position']; v.cols = 'minmax(130px, 1.3fr) minmax(130px, 1.2fr) 140px 150px minmax(130px, 1fr)';
@@ -1334,7 +1338,7 @@ class Component extends DCLogic {
     // Source capteur choisie mais aucune mesure reçue : on n'affiche pas les valeurs simulées de départ
     const noLive = (s.demoSource === 'serveur' && !this.lastReal) || (s.demoSource === 'reel' && !this.esp.gotReal);
     const active = s.compareOpen ? 'analyse' : s.view, isList = LIST_VIEWS.indexOf(s.view) >= 0;
-    const navItem = n => { const onv = active === n[2]; return { label: n[0], d: n[1], go: () => this.go(n[2]), current: onv ? 'page' : 'false', fg: onv ? '#1A1F1D' : '#6B7570', bg: onv ? '#EEF5F0' : 'transparent', bd: onv ? '#D7E8DE' : 'transparent' }; };
+    const navItem = n => { const onv = active === n[2]; return { label: n[0], d: n[1], go: () => this.go(n[2]), current: onv ? 'page' : 'false', fg: onv ? '#1A1F1D' : '#5E6863', bg: onv ? '#EEF5F0' : 'transparent', bd: onv ? '#D7E8DE' : 'transparent' }; };
     const zone = idx >= 60 ? 'alerte' : idx >= 40 ? 'vigilance' : 'normal';
     const zc = { normal: '#2F9E6E', vigilance: '#E1AE1E', alerte: '#D64545' }[zone];
     const v = Math.max(0.6, Math.min(100, idx)), th = Math.PI * (1 - v / 100), kx = 120 + 100 * Math.cos(th), ky = 124 - 100 * Math.sin(th);
@@ -1430,8 +1434,9 @@ class Component extends DCLogic {
       createMission: () => this.addMission(s.selected),
       ai, tabAssistant: () => this.setState({ bTab: 'assistant' }), tabAlertes: () => this.setState({ bTab: 'alertes' }),
       bannerT: s.banner && alert ? 'translateY(0)' : 'translateY(calc(-100% - 40px))', bannerHidden: !(s.banner && alert), bannerVis: s.banner && alert ? 'visible' : 'hidden',
-      hdr: { clock: s.w >= 1320 ? 'block' : 'none', live: s.w >= 1100 ? 'inline' : 'none', user: s.w >= 1000 ? 'flex' : 'none' }, hideBanner: () => this.setState({ banner: false }),
-      bannerTxt: 'Capteur PH-CI-003 · Kokumbo · Indice ' + idx + ' · Turbidité ' + fr(d.turb, 0) + ' NTU (référence 5)', bannerTime: s.alertAt ? hhmmss(s.alertAt) : '',
+      hdr: { clock: s.w >= 1320 ? 'block' : 'none', live: s.w >= 1100 ? 'inline' : 'none', user: s.w >= 1000 ? 'flex' : 'none', badge: s.w >= 760 ? 'inline-flex' : 'none', search: s.w >= 640 ? 'flex' : 'none',
+        loc: s.w >= 1360 || s.w < 1180 ? 'inline' : 'none', tileFs: s.w >= 1360 || s.w < 1180 ? '36px' : '28px', legCols: s.w >= 1360 || s.w < 1180 ? '12px minmax(0, 1fr) auto auto' : '12px minmax(0, 1fr) auto', legHa: s.w >= 1360 || s.w < 1180 ? 'block' : 'none', liveDir: s.w < 700 ? 'column' : 'row', sparkH: s.w >= 1360 || s.w < 1180 ? '20px' : '10px', liveAlign: s.w < 700 ? 'center' : 'stretch' }, hideBanner: () => this.setState({ banner: false }),
+      bannerTxt: 'PH-CI-003 · Kokumbo · indice ' + idx + ' · turbidité ' + fr(d.turb, 0) + ' NTU (réf. 5)' + (s.demoSource === 'rejeu' ? ' · simulation' : ''), bannerTime: s.alertAt ? hhmmss(s.alertAt) : '',
       toasts: s.toasts,
       demoOpen: s.demoOpen, toggleDemo: () => this.setState({ demoOpen: !s.demoOpen }),
       srcReal: s.demoSource === 'reel', srcReplay: s.demoSource !== 'reel', srcRealBg: s.demoSource === 'reel' ? '#FFFFFF' : 'transparent', srcReplayBg: s.demoSource !== 'reel' ? '#FFFFFF' : 'transparent',

@@ -11,12 +11,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="./cirex-data.js"></script>
 <style>
-  :root { --ink: #1A1F1D; --ink-2: #4F5853; --ink-3: #6B7570; --line: #E3E6E1; --bg: #E4E7E2; --paper: #FFFFFF; --green: #2F9E6E; --magenta: #C2399A; --warn-bg: #FBF6E6; --warn-bd: #C99A1A; --warn-fg: #7A5C00; }
+  :root { --ink: #1A1F1D; --ink-2: #4F5853; --ink-3: #5E6863; --line: #E3E6E1; --bg: #E4E7E2; --paper: #FFFFFF; --green: #2F9E6E; --magenta: #C2399A; --warn-bg: #FBF6E6; --warn-bd: #C99A1A; --warn-fg: #7A5C00; }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Geist', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
   .bar { position: sticky; top: 0; z-index: 2; display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 12px 16px; background: #FFFFFF; border-bottom: 1px solid var(--line); }
   .bar a { color: #1E6E4C; text-decoration: none; font-size: 14px; }
-  .bar button { height: 38px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--green); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  .bar button { height: 38px; padding: 0 16px; border-radius: 999px; border: 0; background: #1F7A53; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
   .bar button:focus-visible, .bar a:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
   .page { width: min(210mm, calc(100% - 32px)); margin: 24px auto; background: var(--paper); padding: 18mm 16mm; box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 18px 48px rgba(0,0,0,.1); }
   header.doc { display: flex; justify-content: space-between; gap: 16px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
@@ -50,7 +50,7 @@
 </style>
 </head>
 <body>
-<div class="bar"><a href="Centre de surveillance.dc.html">← Centre de surveillance</a><button type="button" onclick="window.print()">Imprimer ou enregistrer en PDF</button></div>
+<div class="bar" role="navigation" aria-label="Navigation"><a href="Centre de surveillance.dc.html">← Centre de surveillance</a><button type="button" onclick="window.print()">Imprimer ou enregistrer en PDF</button></div>
 <main class="page" id="doc" aria-busy="true">
   <p>Chargement du rapport…</p>
 </main>
@@ -101,8 +101,8 @@
       const tb = el('table', null, el('thead', null, el('tr', null, el('th', null, 'Paramètre'), el('th', null, 'Mesure'), el('th', null, 'Référence'))),
         el('tbody', null, row('Turbidité (NTU)', num(C.fr(t.turbidity_ntu, 0)), num(C.fr(b.turbidity_ntu, 0))), row('Conductivité (ppm)', num(C.fr(t.tds_ppm, 0)), num(C.fr(b.tds_ppm, 0))), row('pH', num(C.fr(t.ph, 1)), num(C.fr(b.ph, 1))), row('Température (°C)', num(C.fr(t.temperature_c, 1)), num(C.fr(b.temperature_c, 1)))));
       doc.append(tb);
-      if (readings.length) doc.append(el('p', { style: 'font-size:12px;color:#6B7570' }, 'Dernières mesures avant l’alerte : ' + readings.map(r => C.fr(r.turbidity_ntu, 0) + ' NTU').join(' → ') + '.'));
-      doc.append(el('p', { style: 'font-size:12px;color:#6B7570' }, 'Le pH seul ne permet pas de détecter le mercure : la turbidité (lavage du minerai) et la conductivité sont les signaux retenus. Un prélèvement pour analyse en laboratoire reste nécessaire.'));
+      if (readings.length) doc.append(el('p', { style: 'font-size:12px;color:#5E6863' }, 'Dernières mesures avant l’alerte : ' + readings.map(r => C.fr(r.turbidity_ntu, 0) + ' NTU').join(' → ') + '.'));
+      doc.append(el('p', { style: 'font-size:12px;color:#5E6863' }, 'Le pH seul ne permet pas de détecter le mercure : la turbidité (lavage du minerai) et la conductivité sont les signaux retenus. Un prélèvement pour analyse en laboratoire reste nécessaire.'));
     } else {
       doc.append(el('p', null, 'Aucune alerte capteur rattachée à ce rapport.'));
     }
@@ -121,8 +121,8 @@
       const tb = el('table', { style: 'margin-top:10px' }, el('thead', null, el('tr', null, el('th', null, 'Zone'), el('th', null, 'Type'), el('th', null, 'Surface (ha)'), el('th', null, 'Baisse NDVI'), el('th', null, '1re baisse'), el('th', null, 'Centre (lat, lon)'))),
         el('tbody', null, sat.zones.slice(0, 10).map(z => row(z.id, z.type, num(C.fr(z.ha, 2)), num(C.fr(z.signal, 2)), z.first ? C.monthFr(z.first) : '—', el('td', { class: 'mono' }, z.centre ? C.fr(z.centre[0], 5) + ', ' + C.fr(z.centre[1], 5) : '—')))));
       doc.append(tb);
-      if (sat.zones.length > 10) doc.append(el('p', { style: 'font-size:12px;color:#6B7570' }, '+ ' + (sat.zones.length - 10) + ' zones plus petites (liste complète dans changes.geojson).'));
-      doc.append(el('p', { style: 'font-size:12px;color:#6B7570' }, S.methode + ' Une perte de végétation peut aussi venir d’un défrichement agricole : la vérification terrain tranche. « Baisse NDVI » mesure l’intensité du changement, pas une probabilité.'));
+      if (sat.zones.length > 10) doc.append(el('p', { style: 'font-size:12px;color:#5E6863' }, '+ ' + (sat.zones.length - 10) + ' zones plus petites (liste complète dans changes.geojson).'));
+      doc.append(el('p', { style: 'font-size:12px;color:#5E6863' }, S.methode + ' Une perte de végétation peut aussi venir d’un défrichement agricole : la vérification terrain tranche. « Baisse NDVI » mesure l’intensité du changement, pas une probabilité.'));
     } else doc.append(el('p', null, 'Calcul satellite indisponible.'));
 
     // 3. Cadastre
