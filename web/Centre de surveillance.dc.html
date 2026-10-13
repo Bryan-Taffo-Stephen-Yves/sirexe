@@ -102,7 +102,7 @@
               <span style="font-size:12px; color:#4F5853; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ esp.sub }}</span>
             </div>
           </div>
-          <div style="flex:1; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(132px, 1fr));">
+          <div style="flex:1; min-width:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(156px, 1fr));">
             <sc-for list="{{ esp.stripTiles }}" as="t" hint-placeholder-count="6">
               <div style="min-width:0; display:flex; flex-direction:column; justify-content:center; gap:3px; padding:8px 14px; border-left:1px solid #EEF0ED;">
                 <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#4F5853; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.k }}</span>
@@ -455,7 +455,7 @@
     </main>
 
     <sc-if value="{{ isEsp }}" hint-placeholder-val="{{ false }}">
-      <div style="position:absolute; left:0; right:0; top:64px; bottom:0; z-index:50; padding:4px 16px 16px; box-sizing:border-box; background:#F3F4F1; overflow:auto;">
+      <div role="region" aria-label="Station ESP32" style="position:absolute; left:0; right:0; top:64px; bottom:0; z-index:50; padding:4px 16px 16px; box-sizing:border-box; background:#F3F4F1; overflow:auto;">
         <div style="display:grid; grid-template-columns:{{ esp.cols }}; gap:12px; height:{{ esp.gridH }};">
           <div style="min-width:0; min-height:0; display:flex; flex-direction:column; gap:12px;">
             <div ref="{{ espBoxRef }}" aria-label="Flux vidéo ESP32-CAM" style="position:relative; flex:1; min-height:340px; border-radius:18px; overflow:hidden; background:#0B0F0D; border:1px solid #D5DAD3; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);">
@@ -476,6 +476,13 @@
                 <button type="button" onClick="{{ c.act }}" disabled="{{ c.disabled }}" aria-pressed="{{ c.pressed }}" style="height:40px; padding:0 16px; border-radius:999px; border:1px solid {{ c.bd }}; background:{{ c.bg }}; color:{{ c.fg }}; font-size:14px; font-weight:500; cursor:{{ c.cursor }}; opacity:{{ c.op }}; display:flex; align-items:center; gap:8px; white-space:nowrap;" style-hover="filter:brightness(0.96);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ c.d }}"></path></svg>{{ c.label }}</button>
               </sc-for>
             </div>
+            <sc-if value="{{ esp.hasThumbs }}" hint-placeholder-val="{{ false }}">
+              <div role="list" aria-label="Dernières photos" style="flex:none; display:flex; gap:8px; overflow-x:auto; padding-bottom:2px;">
+                <sc-for list="{{ esp.thumbs }}" as="p" hint-placeholder-count="0">
+                  <button type="button" role="listitem" onClick="{{ p.pick }}" aria-pressed="{{ p.on }}" title="{{ p.label }}" aria-label="{{ p.label }}" style="flex:none; width:96px; height:64px; padding:0; border-radius:10px; border:{{ p.bd }}; overflow:hidden; background:#0B0F0D; cursor:pointer;"><img src="{{ p.src }}" alt="" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></button>
+                </sc-for>
+              </div>
+            </sc-if>
             <div style="flex:none; display:grid; grid-template-columns:repeat(auto-fill, minmax(172px, 1fr)); gap:12px;">
               <sc-for list="{{ esp.tiles }}" as="t" hint-placeholder-count="5">
                 <div style="min-width:0; padding:12px 14px; border-radius:14px; background:#FFFFFF; border:1px solid #E3E6E1; display:flex; flex-direction:column; gap:5px;">
@@ -493,8 +500,8 @@
                 <div style="flex:1;"></div>
                 <span style="flex:none; display:inline-flex; align-items:center; gap:6px; height:26px; padding:0 9px; border-radius:999px; background:{{ esp.linkBg }}; color:{{ esp.linkFg }}; font-size:12px; font-weight:600; white-space:nowrap;"><span style="width:7px; height:7px; border-radius:50%; background:{{ esp.linkDot }};"></span>{{ esp.link }}</span>
               </div>
-              <div role="radiogroup" aria-label="Mode de liaison" style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); padding:3px; border-radius:12px; background:#F1F3F0; gap:3px;">
-                <sc-for list="{{ esp.modes }}" as="o" hint-placeholder-count="3">
+              <div role="radiogroup" aria-label="Mode de liaison" style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); padding:3px; border-radius:12px; background:#F1F3F0; gap:3px;">
+                <sc-for list="{{ esp.modes }}" as="o" hint-placeholder-count="4">
                   <button type="button" role="radio" aria-checked="{{ o.on }}" onClick="{{ o.pick }}" style="height:34px; border-radius:9px; border:0; background:{{ o.bg }}; box-shadow:{{ o.sh }}; font-size:13px; font-weight:{{ o.w }}; color:#1A1F1D; cursor:pointer; white-space:nowrap;">{{ o.label }}</button>
                 </sc-for>
               </div>
@@ -507,6 +514,9 @@
               </sc-if>
               <sc-if value="{{ esp.isSim }}" hint-placeholder-val="{{ false }}">
                 <span style="font-size:13px; line-height:1.45; color:#4F5853;">Valeurs et SMS inventés pour répéter la démonstration sans matériel. Le badge « Simulation » reste affiché.</span>
+              </sc-if>
+              <sc-if value="{{ esp.isSrv }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:13px; line-height:1.45; color:#4F5853;">Le boîtier envoie son état, ses SMS et ses photos au serveur : cet écran fonctionne de n’importe où, sans être sur le Wi-Fi du site. Les commandes (photo, flash, lampe) passent aussi par le serveur.</span>
               </sc-if>
               <div style="display:flex; gap:8px;">
                 <button type="button" onClick="{{ esp.toggle }}" style="flex:1; height:40px; border-radius:999px; border:1px solid {{ esp.btnBd }}; background:{{ esp.btnBg }}; color:{{ esp.btnFg }}; font-size:14px; font-weight:600; cursor:pointer;" style-hover="filter:brightness(0.95);">{{ esp.btnLabel }}</button>
@@ -818,6 +828,8 @@ const espTime = v => {
 const smsClock = t => { const d = new Date(t), p = x => String(x).padStart(2, '0'), hm = p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds()); return d.toDateString() === new Date().toDateString() ? hm : d.getDate() + ' ' + MONTHS[d.getMonth()] + ' · ' + hm; };
 const SIM_SMS = ['PH-CI-003 · état OK · turbidité 9 NTU · batterie 3,9 V', 'Station PH-CI-003 en ligne · réseau Orange CI · signal 18/31', 'Rapport horaire · mesures envoyées · 0 erreur'];
 const ESP_HELP = ['GET http://<ip>/status   → JSON, par exemple :', '{ "rssi": -48, "sensor": "RGB565 · 10 MHz",', '  "frames": 806, "errors": 0, "uptime": 1188,', '  "turbidity": 9.2, "tds": 134, "ph": 6.9,', '  "temperature": 27.8 }', '', 'GET http://<ip>/sms      → [{ "from": "+225…",', '  "text": "…", "time": "26/10/15,10:56:02+00" }]', 'GET http://<ip>:81/stream  flux MJPEG', 'GET http://<ip>/capture    photo JPEG', 'GET http://<ip>/control?var=flash|lamp|mode&val=…', '', 'En-tête requis : Access-Control-Allow-Origin: *', '', 'WebSocket : images JPEG en binaire, état en JSON', 'texte, SMS en { "type": "sms", "from", "text" }.'].join(String.fromCharCode(10));
+const ESP_MODES = [['serveur', 'Serveur'], ['http', 'HTTP local'], ['ws', 'WebSocket'], ['sim', 'Simulation']];
+const ESP_HELP_SRV = ['Le boîtier (ou relay/esp32_relay.py) parle au serveur :', '', 'POST …/functions/v1/device-event', 'x-device-key: <clé du capteur>', '{ "kind": "status", "sensor_id": "PH-CI-003",', '  "status": { "rssi": -48, "frames": 806, … } }', '', '{ "kind": "sms", "sensor_id": "PH-CI-003",', '  "messages": [{ "from": "+225…", "text": "…",', '  "time": "26/10/15,10:56:02+00" }] }', '', 'Photo : corps JPEG brut, Content-Type image/jpeg,', '  URL …/device-event?sensor_id=PH-CI-003', '', 'Commandes : GET …/device-event?kind=commands', '  &sensor_id=PH-CI-003 → capture, flash, lampe'].join(String.fromCharCode(10));
 const VIEWS = { apercu: 'Centre de surveillance', esp: 'Station ESP32', carte: 'Carte satellite', alertes: 'Alertes', sites: 'Sites d’orpaillage', capteurs: 'Capteurs', missions: 'Missions', rapports: 'Rapports', equipe: 'Équipe', parametres: 'Paramètres' };
 const LIST_VIEWS = ['alertes', 'sites', 'capteurs', 'missions', 'rapports', 'equipe', 'parametres'];
 const EMPTY_LV = { title: '', minW: '0', head: [], cols: '1fr', rows: [], empty: false, q: '', onQ: NOOP, ph: '', summary: '', foot: '', hasFoot: false, hasFilters: false, filters: [] };
@@ -830,7 +842,7 @@ class Component extends DCLogic {
   camRef = React.createRef();
   camPrevRef = React.createRef();
   espBoxRef = React.createRef();
-  esp = (() => { let cfg = {}; try { cfg = JSON.parse(localStorage.getItem('orp-esp-cfg') || '{}') || {}; } catch (e) { cfg = {}; } return { cfg: Object.assign({ mode: 'http', host: '192.168.4.1', stream: '', ws: 'ws://192.168.4.1:81/ws' }, cfg), on: false, sim: false, status: {}, last: 0, t0: 0, err: '', streamErr: false, frame: '', sms: [], smsKeys: {}, flash: true, lamp: false, mode: 'stream', shot: 0, help: false, iv: [] }; })();
+  esp = (() => { let cfg = {}; try { cfg = JSON.parse(localStorage.getItem('orp-esp-cfg') || '{}') || {}; } catch (e) { cfg = {}; } return { cfg: Object.assign({ mode: 'serveur', host: '192.168.4.1', stream: '', ws: 'ws://192.168.4.1:81/ws' }, cfg), on: false, sim: false, status: {}, last: 0, t0: 0, err: '', streamErr: false, frame: '', sms: [], smsKeys: {}, flash: true, lamp: false, mode: 'stream', shot: 0, help: false, iv: [] }; })();
   searchRef = React.createRef();
   t0 = Date.now();
   timers = [];
@@ -847,7 +859,7 @@ class Component extends DCLogic {
     return {
       phase: alerte ? 'alerte' : 'calme', disp: Object.assign({}, alerte ? PEAK : CALM), hist: this.makeHist(alerte),
       alertAt: alerte ? this.demoNow() - 12000 : null, a413: alerte ? 'analyse' : null, selected: alerte ? 'ORP-0142' : null, banner: alerte,
-      compareOpen: false, layersOpen: false, legendOpen: this.props.composition === 'B', sensorOpen: false, demoOpen: false, demoSource: (() => { try { return localStorage.getItem('cirex-source') || 'rejeu'; } catch (e) { return 'rejeu'; } })(), navOpen: false, camErr: '', camTick: 0, sat: null, server: { ok: false, msg: 'Connexion au serveur…' }, dbAlerts: [], dbMissions: [], dbReports: [], alertCode: null, alertId: null,
+      compareOpen: false, layersOpen: false, legendOpen: this.props.composition === 'B', sensorOpen: false, demoOpen: false, demoSource: (() => { try { return localStorage.getItem('cirex-source') || 'rejeu'; } catch (e) { return 'rejeu'; } })(), navOpen: false, camErr: '', camTick: 0, sat: null, server: { ok: false, msg: 'Connexion au serveur…' }, dbAlerts: [], dbMissions: [], dbReports: [], alertCode: null, alertId: null, dev: null, devSms: [], frames: [], frameSel: null,
       base: alerte ? 's2' : 'esri', zoom: alerte ? 15 : 6.7, s2year: 2025, on: Object.assign({}, DEF_ON), tilted: false, measuring: false,
       w: (this.props.frame ? 1440 : (window.innerWidth || 1440)), now: this.demoNow(), toasts: [], searchQ: '', mapQ: '', searchMsg: '', bTab: 'alertes', seqStep: null, muted: false, view: 'apercu', lf: 0, lq: '', newMissions: [], sms: true
     };
@@ -945,7 +957,7 @@ class Component extends DCLogic {
     if (!alerte && this.state && this.state.demoSource === 'serveur') this.closeOpenAlerts(); // une seule alerte ouverte par capteur : on libère la suivante
     this.clearTimers(); this.seqRunning = false; this.autoCompare = false; cancelAnimationFrame(this.raf);
     const s = this.initial(alerte);
-    ['layersOpen', 'legendOpen', 'demoOpen', 'navOpen', 'muted', 'sms', 'demoSource', 'w', 'on', 'camErr', 'sat', 'server', 'dbAlerts', 'dbMissions', 'dbReports'].forEach(k => { s[k] = this.state[k]; });
+    ['layersOpen', 'legendOpen', 'demoOpen', 'navOpen', 'muted', 'sms', 'demoSource', 'w', 'on', 'camErr', 'sat', 'server', 'dbAlerts', 'dbMissions', 'dbReports', 'dev', 'devSms', 'frames'].forEach(k => { s[k] = this.state[k]; });
     this.setState(s, () => this.applyMapMode());
   }
   chime() {
@@ -1059,12 +1071,20 @@ class Component extends DCLogic {
       .on('postgres_changes', { event: '*', schema: 'public', table: 'alerts' }, ev => this.onAlert(ev))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'missions' }, () => this.loadDb('missions'))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'reports' }, () => this.loadDb('reports'))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'device_status', filter: 'sensor_id=eq.PH-CI-003' }, ev => { if (ev.new && ev.new.sensor_id) this.setState({ dev: ev.new }); })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'sms_messages', filter: 'sensor_id=eq.PH-CI-003' }, ev => { this.setState(s => ({ devSms: [ev.new].concat(s.devSms).slice(0, 100) })); if (this.esp.cfg.mode === 'serveur') this.toast((/alerte/i.test(ev.new.body) ? 'SMS d’alerte · ' : 'Nouveau SMS · ') + (ev.new.sender || 'inconnu')); })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'camera_frames', filter: 'sensor_id=eq.PH-CI-003' }, ev => this.setState(s => ({ frames: [ev.new].concat(s.frames).slice(0, 24), frameSel: null })))
       .subscribe(st => this.setState({ server: { ok: st === 'SUBSCRIBED', msg: st === 'SUBSCRIBED' ? 'Serveur connecté · temps réel' : st === 'CHANNEL_ERROR' || st === 'TIMED_OUT' ? 'Serveur injoignable' : 'Connexion au serveur…' } }));
   }
   loadDb(only) {
     const db = this.db; if (!db) return;
     if (!only || only === 'alerts') db.from('alerts').select('id, code, sensor_id, created_at, suspicion_score, status, source, trigger').order('created_at', { ascending: false }).limit(30).then(({ data }) => data && this.setState({ dbAlerts: data }));
     if (!only || only === 'missions') db.from('missions').select('id, code, target, locality, kind, agent, status, created_at, alert_id').order('created_at', { ascending: false }).limit(50).then(({ data }) => data && this.setState({ dbMissions: data }));
+    if (!only || only === 'device') {
+      db.from('device_status').select('sensor_id, status, updated_at').eq('sensor_id', 'PH-CI-003').maybeSingle().then(({ data }) => this.setState({ dev: data || null }));
+      db.from('sms_messages').select('id, sender, body, sent_at, received_at').eq('sensor_id', 'PH-CI-003').order('received_at', { ascending: false }).limit(100).then(({ data }) => data && this.setState({ devSms: data }));
+      db.from('camera_frames').select('id, path, bytes, taken_at').eq('sensor_id', 'PH-CI-003').order('taken_at', { ascending: false }).limit(24).then(({ data }) => data && this.setState({ frames: data }));
+    }
     if (!only || only === 'reports') db.from('reports').select('id, code, title, kind, status, updated_at').order('updated_at', { ascending: false }).limit(50).then(({ data }) => data && this.setState({ dbReports: data }));
   }
   loadHistory() {
@@ -1184,8 +1204,20 @@ class Component extends DCLogic {
     if (e.mode === 'photo') { e.shot = Date.now(); this.setState({ espTick: Date.now() }); return; }
     window.open(this.espBase() + '/capture?t=' + Date.now(), '_blank', 'noopener');
   }
+  /* Station via le serveur : état, SMS et photos envoyés par le boîtier ou le relais (fonction device-event) */
+  devInfo() {
+    const d = this.state.dev, st = d && d.status && typeof d.status === 'object' ? d.status : {};
+    const has = !!(d && Object.keys(st).length), t = d ? Date.parse(d.updated_at) : 0;
+    return { st, has, t, fresh: has && Date.now() - t < 30000 };
+  }
+  frameUrl(f) { const C = window.CIREX; return f && C && C.config.supabaseUrl ? C.config.supabaseUrl + '/storage/v1/object/public/camera/' + f.path.split('/').map(encodeURIComponent).join('/') : ''; }
+  devCmd(cmd, val) {
+    if (!this.db) { this.toast('Serveur non configuré'); return; }
+    this.db.from('device_commands').insert({ sensor_id: 'PH-CI-003', cmd, val: val == null ? null : String(val) }).then(({ error }) => this.toast(error ? 'Commande refusée · ' + error.message : (cmd === 'capture' ? 'Photo demandée au boîtier · elle s’affichera à son arrivée' : 'Commande envoyée au boîtier · ' + cmd + ' = ' + val)));
+  }
   espFull() { const b = this.espBoxRef.current; if (!b) return; if (document.fullscreenElement) document.exitFullscreen(); else if (b.requestFullscreen) b.requestFullscreen(); }
   espVals(s, L) {
+    if (this.esp.cfg.mode === 'serveur') return this.espServerVals(s, L);
     const e = this.esp, now = Date.now(), st = e.status || {}, cfg = e.cfg;
     const link = !e.on ? ['Non connectée', '#4F5853', '#9AA39E', '#F0F2F1'] : e.sim ? ['Simulation', '#1E6E4C', '#2F9E6E', '#E6F4EC'] : e.last && now - e.last < 6000 ? ['Connectée', '#1E6E4C', '#2F9E6E', '#E6F4EC'] : e.last ? ['Liaison perdue', '#A62C2C', '#D64545', '#FBE3E3'] : ['Connexion…', '#7A5C00', '#E1AE1E', '#FBF1CF'];
     const keys = Object.keys(st).filter(k => !ESP_SKIP[k.toLowerCase()]), seen = {};
@@ -1209,15 +1241,16 @@ class Component extends DCLogic {
     const gsmBits = []; if (st.operator) gsmBits.push(String(st.operator)); if (st.csq !== undefined) gsmBits.push('signal ' + st.csq + '/31');
     const warnUrl = cfg.mode === 'ws' ? cfg.ws || '' : this.espBase();
     return {
-      strip: s.view === 'apercu' && (s.demoSource === 'reel' || e.on), // bandeau seulement quand l'ESP32 local sert sub: !e.on ? 'Cliquer pour connecter' : e.sim ? 'Simulation · données inventées' : (cfg.mode === 'ws' ? cfg.ws : this.espBase().replace(/^https?:\/\//, '')),
-      stripTiles: tiles.slice(0, 5).concat([smsTile]), tiles,
+      // bandeau de la vue d'ensemble : seulement quand la station transmet quelque chose
+      strip: s.view === 'apercu' && e.on, sub: e.sim ? 'Simulation · données inventées' : (cfg.mode === 'ws' ? cfg.ws : this.espBase().replace(/^https?:\/\//, '')),
+      stripTiles: tiles.concat([smsTile]), tiles, thumbs: [], hasThumbs: false,
       cols: L.key === 'T' ? 'minmax(0, 1fr)' : 'minmax(0, 1fr) 380px', gridH: L.key === 'T' ? 'auto' : '100%',
       hasImg: !!src, noImg: !src, emptyTitle, emptySub,
       img: src ? React.createElement('img', { key: src, src, alt: 'Image transmise par l’ESP32-CAM', onError: () => { e.streamErr = true; this.setState({ espTick: Date.now() }); }, style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain' } }) : null,
       link: link[0], linkFg: link[1], linkDot: link[2], linkBg: link[3], badge: e.on ? (e.sim ? 'Simulation' : link[0] + (photoMode ? ' · photo' : ' · flux continu')) : 'Hors ligne',
       ctrls,
-      modes: [['http', 'HTTP'], ['ws', 'WebSocket'], ['sim', 'Simulation']].map(([k, label]) => { const on = cfg.mode === k; return { label, on, pick: () => { this.espSet('mode', k); if (e.on) this.espConnect(); }, bg: on ? '#FFFFFF' : 'transparent', sh: on ? '0 1px 2px rgba(0,0,0,0.1)' : 'none', w: on ? 600 : 500 }; }),
-      isHttp: cfg.mode === 'http', isWs: cfg.mode === 'ws', isSim: cfg.mode === 'sim',
+      modes: ESP_MODES.map(([k, label]) => { const on = cfg.mode === k; return { label, on, pick: () => { this.espSet('mode', k); if (e.on) this.espConnect(); }, bg: on ? '#FFFFFF' : 'transparent', sh: on ? '0 1px 2px rgba(0,0,0,0.1)' : 'none', w: on ? 600 : 500 }; }),
+      isHttp: cfg.mode === 'http', isWs: cfg.mode === 'ws', isSim: cfg.mode === 'sim', isSrv: false,
       host: cfg.host, onHost: ev => this.espSet('host', ev.target.value), streamOv: cfg.stream, onStream: ev => this.espSet('stream', ev.target.value), streamPh: this.espStream() || 'http://192.168.4.1:81/stream',
       ws: cfg.ws, onWs: ev => this.espSet('ws', ev.target.value),
       toggle: () => { if (e.on) this.espStop(); else this.espConnect(); }, btnLabel: e.on ? 'Déconnecter' : 'Connecter', btnBg: e.on ? '#FFFFFF' : '#1F7A53', btnFg: e.on ? '#1A1F1D' : '#FFFFFF', btnBd: e.on ? '#D5DAD3' : '#1F7A53',
@@ -1226,6 +1259,47 @@ class Component extends DCLogic {
       hasWarn: cfg.mode !== 'sim' && location.protocol === 'https:' && /^(http|ws):/i.test(warnUrl), warn: 'Cette page est servie en https : le navigateur refusera de joindre ' + warnUrl + '. Pour la démo, ouvrez le fichier téléchargé en local sur un ordinateur relié au même Wi-Fi que l’ESP32.',
       sms: e.sms.map(m => { const a = /alerte/i.test(m.text); return { from: m.from, text: m.text, time: smsClock(m.t), bg: a ? '#FDF1F1' : '#F7F8F6', bd: a ? '#F3CFCF' : '#ECEEEA' }; }),
       smsCount: String(e.sms.length), smsEmpty: !e.sms.length, smsEmptyTxt: e.on ? 'Aucun SMS reçu pour le moment. Les messages transmis par le module SIM de l’ESP32 s’affichent ici dès leur arrivée.' : 'Connectez l’ESP32 pour recevoir les SMS de son module SIM.',
+      gsm: gsmBits.join(' · ')
+    };
+  }
+  espServerVals(s, L) {
+    const e = this.esp, cfg = e.cfg, D = this.devInfo(), st = D.st, now = Date.now();
+    const ago = t => { const x = Math.max(0, Math.round((now - t) / 1000)); return x < 60 ? 'il y a ' + x + ' s' : x < 3600 ? 'il y a ' + Math.floor(x / 60) + ' min' : this.rel(t); };
+    const link = !this.db ? ['Serveur non configuré', '#4F5853', '#9AA39E', '#F0F2F1'] : !D.has ? ['Aucune donnée reçue', '#4F5853', '#9AA39E', '#F0F2F1'] : D.fresh ? ['Connectée · serveur', '#1E6E4C', '#2F9E6E', '#E6F4EC'] : ['Dernière donnée ' + ago(D.t), '#7A5C00', '#E1AE1E', '#FBF1CF'];
+    const keys = Object.keys(st).filter(k => !ESP_SKIP[k.toLowerCase()]), seen = {};
+    keys.sort((a, b) => { const ia = ESP_ORDER.indexOf(a.toLowerCase()), ib = ESP_ORDER.indexOf(b.toLowerCase()); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+    const tiles = [{ k: 'Liaison', v: link[0], c: link[1], dotD: 'inline-block', dotC: link[2] }];
+    keys.forEach(k => { const lab = espLabel(k); if (seen[lab]) return; seen[lab] = 1; tiles.push({ k: lab, v: espFmt(k, st[k], st), c: '#1A1F1D', dotD: 'none', dotC: 'transparent' }); });
+    if (D.has) tiles.push({ k: 'Mise à jour', v: ago(D.t), c: '#1A1F1D', dotD: 'none', dotC: 'transparent' });
+    const sms = s.devSms.map(m => { const t = Date.parse(m.sent_at || m.received_at), a = /alerte/i.test(m.body); return { from: m.sender || 'Inconnu', text: m.body, time: smsClock(t), bg: a ? '#FDF1F1' : '#F7F8F6', bd: a ? '#F3CFCF' : '#ECEEEA', t }; });
+    const smsTile = { k: 'Messages SIM', v: sms.length ? sms.length + ' · ' + sms[0].time : '0', c: '#1A1F1D', dotD: 'none', dotC: 'transparent' };
+    const frames = s.frames, cur = (s.frameSel && frames.find(f => f.id === s.frameSel)) || frames[0], src = this.frameUrl(cur);
+    const on = !!this.db;
+    const btn = (label, d, act, pressed, enabled) => { const ok = enabled !== false && on; return { label, d, act, pressed: !!pressed, disabled: !ok, op: ok ? 1 : 0.45, cursor: ok ? 'pointer' : 'not-allowed', bg: pressed ? '#EEF5F0' : '#FFFFFF', bd: pressed ? '#9FD0B7' : '#D5DAD3', fg: pressed ? '#1E6E4C' : '#1A1F1D' }; };
+    const ZAP = 'M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z';
+    const SUN = 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41';
+    const CAMI = 'M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3zM12 10a3 3 0 1 0 0 6 3 3 0 0 0 0-6';
+    const DL = 'M12 15V3M7 10l5 5 5-5M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4';
+    const ctrls = [btn('Plein écran', CTRL.full, () => this.espFull(), false, !!src), btn('Prendre une photo', CAMI, () => this.devCmd('capture'), false),
+      btn('Télécharger', DL, () => { if (src) window.open(src, '_blank', 'noopener'); }, false, !!src),
+      btn('Flash photo : ' + (e.flash ? 'ON' : 'OFF'), ZAP, () => { e.flash = !e.flash; this.devCmd('flash', e.flash ? 1 : 0); }, e.flash), btn('Lampe : ' + (e.lamp ? 'ON' : 'OFF'), SUN, () => { e.lamp = !e.lamp; this.devCmd('lamp', e.lamp ? 1 : 0); }, e.lamp)];
+    const gsmBits = []; if (st.operator) gsmBits.push(String(st.operator)); if (st.csq !== undefined) gsmBits.push('signal ' + st.csq + '/31');
+    const thumbs = frames.slice(0, 12).map(f => ({ key: f.id, src: this.frameUrl(f), on: cur && f.id === cur.id, pick: () => this.setState({ frameSel: f.id }), bd: cur && f.id === cur.id ? '2px solid #1F7A53' : '1px solid #D5DAD3', label: 'Photo du ' + smsClock(Date.parse(f.taken_at)) }));
+    return {
+      strip: s.view === 'apercu' && D.has, sub: 'PH-CI-003 · via le serveur',
+      stripTiles: tiles.concat([smsTile]), tiles,
+      cols: L.key === 'T' ? 'minmax(0, 1fr)' : 'minmax(0, 1fr) 380px', gridH: L.key === 'T' ? 'auto' : '100%',
+      hasImg: !!src, noImg: !src, emptyTitle: 'Aucune photo reçue', emptySub: on ? 'Le boîtier (ou le relais) envoie ses photos à la fonction device-event. Cliquez sur « Prendre une photo » pour en demander une.' : 'Serveur non configuré.',
+      img: src ? React.createElement('img', { key: src, src, alt: 'Dernière photo transmise par l’ESP32-CAM', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain' } }) : null,
+      link: link[0], linkFg: link[1], linkDot: link[2], linkBg: link[3], badge: cur ? 'Photo · ' + ago(Date.parse(cur.taken_at)) : link[0],
+      ctrls, thumbs, hasThumbs: thumbs.length > 1,
+      modes: ESP_MODES.map(([k, label]) => { const onm = cfg.mode === k; return { label, on: onm, pick: () => { this.espSet('mode', k); if (k === 'serveur') { this.espStop(true); this.loadDb('device'); } }, bg: onm ? '#FFFFFF' : 'transparent', sh: onm ? '0 1px 2px rgba(0,0,0,0.1)' : 'none', w: onm ? 600 : 500 }; }),
+      isHttp: false, isWs: false, isSim: false, isSrv: true,
+      host: cfg.host, onHost: NOOP, streamOv: cfg.stream, onStream: NOOP, streamPh: '', ws: cfg.ws, onWs: NOOP,
+      toggle: () => { this.loadDb('device'); this.toast('Station actualisée'); }, btnLabel: 'Actualiser', btnBg: '#1F7A53', btnFg: '#FFFFFF', btnBd: '#1F7A53',
+      helpOpen: !!e.help, toggleHelp: () => { e.help = !e.help; this.setState({ espTick: Date.now() }); }, help: ESP_HELP_SRV,
+      hasErr: false, err: '', hasWarn: false, warn: '',
+      sms, smsCount: String(sms.length), smsEmpty: !sms.length, smsEmptyTxt: 'Aucun SMS reçu. Les messages du module SIM transmis par le boîtier (device-event, kind « sms ») s’affichent ici dès leur arrivée.',
       gsm: gsmBits.join(' · ')
     };
   }

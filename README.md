@@ -14,6 +14,7 @@ Chaîne : **capteur dans l'eau** (turbidité, conductivité, pH, température) �
 | Capteur PH-CI-003 en mode « Boîtier · serveur » | **Réel** : mesures reçues par la fonction `ingest-reading`, alertes créées par la base |
 | Alertes, missions, rapports enregistrés sur le serveur | **Réel** (Supabase `sirexe`) |
 | Notification Telegram | **Réelle**, envoyée par le serveur dès que le jeton du bot est ajouté (voir plus bas) |
+| Station ESP32 (mode Serveur) : état, SMS, photos de la caméra, commandes | **Réel** dès que le boîtier ou `relay/esp32_relay.py` envoie à la fonction `device-event` |
 | Mode « Simulation » du panneau démo | Valeurs générées par la page, badge « Simulation » affiché |
 | 246 autres sites, 5 autres capteurs, cadastre minier, feux, agents, missions et rapports d'exemple | **Fictifs**, étiquetés comme tels |
 
@@ -34,8 +35,8 @@ web/                 site statique (aucune compilation)
   support.js                       moteur des fichiers .dc.html (Claude Design) : ne pas modifier
 pipeline/ndvi_pipeline.py          calcul NDVI + zones de changement (voir pipeline/README.md)
 supabase/migrations/               tables, indice de suspicion, alertes, droits
-supabase/functions/                ingest-reading (mesures), notify-telegram (notifications)
-relay/esp32_relay.py               ESP32 en HTTP local → serveur HTTPS
+supabase/functions/                ingest-reading (mesures), device-event (état, SMS, photos, commandes), notify-telegram
+relay/esp32_relay.py               ESP32 / ESP32-CAM en HTTP local → serveur HTTPS (mesures, état, SMS, photos, commandes)
 relay/replay.py                    rejeu de mesures enregistrées (plan B)
 docs/DEMO.md                       déroulé de la démo de 3 minutes et plans de secours
 docs/ESP32.md                      contrat d'envoi des mesures pour le firmware
@@ -59,7 +60,7 @@ Le dossier `web/` est un site statique : Vercel, Netlify ou GitHub Pages, sans �
 
 ## Serveur (Supabase, projet `sirexe`)
 
-Déjà en place : tables, triggers (indice de suspicion et création d'alerte), droits, temps réel, fonctions `ingest-reading` et `notify-telegram`.
+Déjà en place : tables, triggers (indice de suspicion et création d'alerte), droits, temps réel, bucket `camera` (photos), fonctions `ingest-reading`, `device-event` et `notify-telegram`.
 
 À faire une fois :
 

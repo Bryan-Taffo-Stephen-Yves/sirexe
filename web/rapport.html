@@ -66,7 +66,7 @@
   async function load() {
     const sat = await C.ready;
     const db = C.db();
-    let report = null, alert = null, mission = null, readings = [], dbErr = '';
+    let report = null, alert = null, mission = null, readings = [], frame = null, dbErr = '';
     if (db && code) {
       try {
         const r = await db.from('reports').select('*').eq('code', code).maybeSingle();
@@ -74,13 +74,15 @@
         if (report && report.alert_id) { const a = await db.from('alerts').select('*').eq('id', report.alert_id).maybeSingle(); alert = a.data; }
         const mq = report && report.alert_id ? db.from('missions').select('*').eq('alert_id', report.alert_id) : report && report.mission_id ? db.from('missions').select('*').eq('id', report.mission_id) : null;
         if (mq) { const m = await mq.order('created_at', { ascending: false }).limit(1); mission = m.data && m.data[0]; }
+        // dernière photo de la caméra du site, au plus tard 30 min après l'alerte
+        if (alert) { const fr = await db.from('camera_frames').select('path, taken_at').eq('sensor_id', alert.sensor_id).lte('taken_at', new Date(Date.parse(alert.created_at) + 30 * 60000).toISOString()).order('taken_at', { ascending: false }).limit(1); frame = fr.data && fr.data[0]; }
         if (alert) { const rd = await db.from('readings').select('measured_at, turbidity_ntu, ph, tds_ppm, temperature_c, suspicion_score, source').eq('sensor_id', alert.sensor_id).lte('measured_at', alert.created_at).order('measured_at', { ascending: false }).limit(6); readings = (rd.data || []).reverse(); }
       } catch (e) { dbErr = e.message || String(e); }
     }
-    render({ sat, report, alert, mission, readings, dbErr });
+    render({ sat, report, alert, mission, readings, frame, dbErr });
   }
 
-  function render({ sat, report, alert, mission, readings, dbErr }) {
+  function render({ sat, report, alert, mission, readings, frame, dbErr }) {
     doc.textContent = ''; doc.setAttribute('aria-busy', 'false');
     const S = sat && sat.summary, today = new Date();
     doc.append(el('header', { class: 'doc' },
@@ -105,6 +107,11 @@
       doc.append(el('p', { style: 'font-size:12px;color:#5E6863' }, 'Le pH seul ne permet pas de détecter le mercure : la turbidité (lavage du minerai) et la conductivité sont les signaux retenus. Un prélèvement pour analyse en laboratoire reste nécessaire.'));
     } else {
       doc.append(el('p', null, 'Aucune alerte capteur rattachée à ce rapport.'));
+    }
+
+    if (frame) {
+      const src = C.config.supabaseUrl + '/storage/v1/object/public/camera/' + frame.path.split('/').map(encodeURIComponent).join('/');
+      doc.append(el('figure', { style: 'margin-top:10px;max-width:60%' }, el('div', { class: 'frame', style: 'aspect-ratio:4/3' }, el('img', { src, alt: 'Photo de la caméra du site' })), el('figcaption', null, 'Caméra de la station ' + alert.sensor_id + ' · ' + C.dateFr(frame.taken_at) + ' à ' + new Date(frame.taken_at).toISOString().slice(11, 19) + ' GMT')));
     }
 
     // 2. Satellite

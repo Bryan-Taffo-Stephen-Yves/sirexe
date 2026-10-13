@@ -21,7 +21,7 @@ Stephen attend une recommandation claire, puis l'exécution. Priorité absolue :
 
 - `web/` : site statique. Écrans exportés de Claude Design (`*.dc.html` + `support.js`, moteur à ne pas modifier) ; logique dans le `<script type="text/x-dc">` de chaque écran (classe `Component extends DCLogic`, valeurs renvoyées par `renderVals()` et injectées dans le gabarit via `{{ }}`). `orp-carto.js` : cartes Leaflet. `cirex-data.js` : `window.CIREX` (JSON du pipeline, client Supabase, formats). `config.js` : URL + clé publiable.
 - `pipeline/ndvi_pipeline.py` : Sentinel-2 L2A depuis AWS Open Data, sorties dans `web/data/<site>/`.
-- Supabase, projet `sirexe` (`dlcuxdzodgctjcxtmuza`) : tables `sensors`, `readings`, `alerts`, `missions`, `reports`, `notifications`. L'indice de suspicion et la création d'alerte sont des triggers SQL ; la même formule existe dans l'écran (`idxOf`). Fonctions : `ingest-reading` (clé capteur, Telegram en cas d'alerte), `notify-telegram` (test et alertes de simulation, 1 message / 30 s).
+- Supabase, projet `sirexe` (`dlcuxdzodgctjcxtmuza`) : tables `sensors`, `readings`, `alerts`, `missions`, `reports`, `notifications`. L'indice de suspicion et la création d'alerte sont des triggers SQL ; la même formule existe dans l'écran (`idxOf`). Tables station : `device_status`, `sms_messages`, `camera_frames` (+ bucket public `camera`), `device_commands`. Fonctions : `ingest-reading` (clé capteur, Telegram en cas d'alerte), `device-event` (état, SMS, photos, commandes de la station), `notify-telegram` (test et alertes de simulation, 1 message / 30 s).
 - `relay/` : relais ESP32 HTTP → serveur, rejeu de mesures.
 
 ## Vérifier un changement

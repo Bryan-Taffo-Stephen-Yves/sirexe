@@ -24,6 +24,10 @@
 
 Phrase d'honnêteté à dire : « Le capteur est réel, la zone satellite est Kokumbo, un site d'orpaillage documenté, calculée sur de vraies images Sentinel-2. Les autres sites de la carte sont fictifs et étiquetés comme tels. »
 
+## Caméra du site (optionnel, 20 s)
+
+Après le rapport, ouvrir **Station ESP32** : dernière photo envoyée par l'ESP32-CAM, cases de l'état du boîtier, SMS reçus par la SIM. Cliquer « Prendre une photo » : la photo arrive quelques secondes plus tard (relais ou boîtier connecté). Message : « sur le terrain, le capteur donne l'alerte, le satellite confirme, la caméra montre ».
+
 ## Plans de secours, du plus réel au moins réel
 
 1. **Boîtier sans HTTPS (ESP32-CAM, carte sans TLS)** : relais sur l'ordinateur, même Wi-Fi que l'ESP32.
