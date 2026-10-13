@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+  <style>
+    html, body { margin: 0; background: #F3F4F1; }
+    body { font-family: 'Geist', system-ui, sans-serif; color: #1A1F1D; -webkit-font-smoothing: antialiased; }
+    a { color: #1E6E4C; text-decoration: none; }
+    a:hover { color: #155238; text-decoration: underline; }
+    :focus-visible { outline: 2px solid #2F9E6E; outline-offset: 2px; }
+    input[type=range] { accent-color: #2F9E6E; }
+  </style>
+</helmet>
+<div data-screen-label="00 Système de design" style="min-height:100vh; background:#F3F4F1; padding:48px 32px 80px; box-sizing:border-box;">
+  <div style="max-width:1240px; margin:0 auto; display:flex; flex-direction:column; gap:28px;">
+
+    <header style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:18px;">
+        <svg width="64" height="64" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 3.5 26.8 9.75v12.5L16 28.5 5.2 22.25V9.75z" stroke="#C9A227" stroke-width="1.4" stroke-linejoin="round"></path><path d="M16 9.6c-2.7 3.4-4.7 5.8-4.7 8.3a4.7 4.7 0 0 0 9.4 0c0-2.5-2-4.9-4.7-8.3z" stroke="#2F9E6E" stroke-width="1.5" stroke-linejoin="round"></path><path d="M14.2 19.2a2 2 0 0 0 1.8 1.4" stroke="#2F9E6E" stroke-width="1.3" stroke-linecap="round"></path></svg>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:15px; font-weight:600; letter-spacing:0.04em;">Cirex<span style="color:#9A7B12; font-weight:500;"> · Prototype</span></span>
+          <h1 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:44px; font-weight:500; line-height:1.1; letter-spacing:-0.02em; white-space:nowrap;">Système de design</h1>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; font-size:14px; color:#4F5853;">
+        <span>Version 0.1 · 5 octobre 2026 · thème clair</span>
+        <span>Plateforme web 1440 × 900 · application agent 390 × 844</span>
+        <span style="font-size:12px; color:#6B7570;">BRENT GROUP · SIREXE 2026</span>
+      </div>
+    </header>
+
+    <section style="background:#FFFFFF; border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:24px; display:flex; flex-direction:column; gap:18px;">
+      <h2 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:28px; font-weight:500;">Couleurs</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:12px;">
+        <sc-for list="{{ neutrals }}" as="c" hint-placeholder-count="9">
+          <div style="display:flex; flex-direction:column; border-radius:14px; border:1px solid #E3E6E1; overflow:hidden; background:#FFFFFF;">
+            <span style="height:64px; background:{{ c.hex }}; border-bottom:1px solid #E3E6E1;"></span>
+            <span style="padding:10px 12px 12px; display:flex; flex-direction:column; gap:3px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:13px; font-weight:500;">{{ c.name }}</span><span style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:#4F5853;">{{ c.hex }}</span><span style="font-size:12px; color:#6B7570; line-height:1.35;">{{ c.use }}</span></span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:16px;">
+        <div style="position:relative; min-height:200px; border-radius:16px; overflow:hidden; background-color:#1B2A22; background-image:url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/15/15798/15916'), url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/15/15798/15917'); background-size:256px 256px, 256px 256px; background-position:0 0, 256px 0; background-repeat:no-repeat;">
+          <div style="position:absolute; left:16px; top:16px; right:16px; display:flex; flex-direction:column; gap:10px; padding:14px 16px; border-radius:16px; background:rgba(20,40,32,0.62); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.14); color:#F2F5F3;">
+            <span style="font-family:'Source Serif 4', Georgia, serif; font-size:19px;">Verre sur carte</span>
+            <span style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.4;">Fond rgba(20, 40, 32, 0,62) · flou 20 px · bordure rgba(255, 255, 255, 0,14) · texte #F2F5F3 · secondaire 70 % · réservé aux panneaux posés sur l’imagerie.</span>
+          </div>
+          <span style="position:absolute; left:16px; bottom:12px; font-size:12px; color:#FFFFFF; text-shadow:0 1px 2px rgba(0,0,0,0.8);">Imagerie Esri World Imagery, secteur de Kokumbo</span>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px;">
+          <sc-for list="{{ accents }}" as="c" hint-placeholder-count="4">
+            <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; border:1px solid #E3E6E1;">
+              <span style="flex:none; width:48px; height:48px; border-radius:12px; background:{{ c.hex }};"></span>
+              <span style="display:flex; flex-direction:column; gap:2px; min-width:0;"><span style="font-family:'IBM Plex Mono', monospace; font-size:13px; font-weight:500;">{{ c.name }} · {{ c.hex }}</span><span style="font-size:12px; color:#4F5853; line-height:1.35;">{{ c.use }}</span></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:#FFFFFF; border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:24px; display:flex; flex-direction:column; gap:18px;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+        <h2 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:28px; font-weight:500;">Statuts des sites et couches</h2>
+        <span style="font-size:14px; color:#4F5853;">Chaque statut porte une couleur, un motif de polygone, une forme de point et une icône : jamais la couleur seule.</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(268px, 1fr)); gap:12px;">
+        <sc-for list="{{ statuses }}" as="s" hint-placeholder-count="9">
+          <div style="display:grid; grid-template-columns:72px minmax(0, 1fr); gap:12px; align-items:center; padding:12px; border-radius:14px; background:#F7F8F6; border:1px solid #ECEEEA;">
+            <span style="height:48px; border-radius:6px; box-sizing:border-box; background:{{ s.fill }}; border:{{ s.border }};"></span>
+            <span style="display:flex; flex-direction:column; gap:4px; min-width:0;">
+              <span style="display:flex; align-items:center; gap:8px;"><span style="font-size:15px; font-weight:600;">{{ s.label }}</span><span style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:#4F5853;">{{ s.hex }}</span></span>
+              <span style="font-size:13px; color:#4F5853; line-height:1.35;">{{ s.rule }}</span>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px; padding:16px; border-radius:14px; border:1px solid #ECEEEA;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;"><span style="font-size:16px; font-weight:600;">Indice de suspicion · 0 → 100</span><span style="font-size:13px; color:#4F5853;">Turbidité 60 % · conductivité 25 % · pH 15 % · alerte au-delà de 60</span></div>
+        <div style="position:relative; height:34px;">
+          <div style="position:absolute; left:0; right:0; top:6px; height:22px; display:flex; gap:2px;">
+            <sc-for list="{{ segs }}" as="sg" hint-placeholder-count="50"><span style="flex:1; border-radius:2px; background:{{ sg.c }};"></span></sc-for>
+          </div>
+          <span style="position:absolute; left:60%; top:0; width:3px; height:34px; margin-left:-1.5px; border-radius:2px; background:#1A1F1D; box-shadow:0 0 0 1.5px #FFFFFF;"></span>
+        </div>
+        <div style="display:grid; grid-template-columns:40fr 20fr 40fr; font-size:13px;">
+          <span style="color:#1E6E4C; font-weight:600;">0–39 · Normal</span><span style="color:#7A5C00; font-weight:600;">40–59 · Vigilance</span><span style="color:#A62C2C; font-weight:600;">60–100 · Alerte (seuil à 60)</span>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:#FFFFFF; border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:24px; display:grid; grid-template-columns:minmax(0, 1.4fr) minmax(0, 1fr); gap:24px;">
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <h2 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:28px; font-weight:500;">Typographie</h2>
+        <div style="display:flex; align-items:baseline; gap:16px; border-bottom:1px solid #EEF0ED; padding-bottom:10px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:72px; line-height:1; letter-spacing:-0.03em;">78</span><span style="font-size:13px; color:#4F5853;">Source Serif 4 · 72 px · indice de démonstration (56–72)</span></div>
+        <div style="display:flex; align-items:baseline; gap:16px; border-bottom:1px solid #EEF0ED; padding-bottom:10px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:40px; line-height:1.1;">184,6 ha</span><span style="font-size:13px; color:#4F5853;">40 px · chiffres clés</span></div>
+        <div style="display:flex; align-items:baseline; gap:16px; border-bottom:1px solid #EEF0ED; padding-bottom:10px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:28px;">Centre de surveillance</span><span style="font-size:13px; color:#4F5853;">28 px · titres d’écran</span></div>
+        <div style="display:flex; align-items:baseline; gap:16px; border-bottom:1px solid #EEF0ED; padding-bottom:10px;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:20px;">Capteur en direct</span><span style="font-size:13px; color:#4F5853;">20 / 18 px · titres de carte</span></div>
+        <div style="display:flex; align-items:baseline; gap:16px; border-bottom:1px solid #EEF0ED; padding-bottom:10px;"><span style="font-size:16px;">Interface en Geist · 16 / 14 px, jamais sous 14 px en projection.</span></div>
+        <div style="display:flex; align-items:baseline; gap:16px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:16px;">PH-CI-003 · 6°25′08″ N · 412 NTU</span><span style="font-size:13px; color:#4F5853;">IBM Plex Mono · identifiants, coordonnées, mesures</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <h2 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:28px; font-weight:500;">Formes et espacements</h2>
+        <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:10px;">
+          <div style="height:80px; border-radius:18px; border:1px solid #E3E6E1; background:#FFFFFF; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); display:grid; place-items:center; font-size:12px; color:#4F5853; text-align:center;">Carte<br>rayon 18</div>
+          <div style="height:80px; border-radius:12px; border:1px solid #ECEEEA; background:#F7F8F6; display:grid; place-items:center; font-size:12px; color:#4F5853; text-align:center;">Zone interne<br>rayon 12</div>
+          <div style="height:80px; display:grid; place-items:center;"><span style="height:36px; padding:0 14px; border-radius:999px; background:#EEF5F0; color:#1E6E4C; font-size:13px; display:flex; align-items:center;">Pilule 999</span></div>
+        </div>
+        <div style="display:flex; align-items:flex-end; gap:8px;">
+          <sc-for list="{{ spaces }}" as="sp" hint-placeholder-count="6">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:6px;"><span style="width:{{ sp.px }}; height:{{ sp.px }}; background:#CFE8DA; border-radius:3px;"></span><span style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:#4F5853;">{{ sp.label }}</span></div>
+          </sc-for>
+        </div>
+        <span style="font-size:13px; color:#4F5853; line-height:1.45;">Grille de 8 px. Ombres : 0 1px 2px rgba(0,0,0,0,04) et 0 4px 16px rgba(0,0,0,0,04). Bordure de carte 1 px #E3E6E1 (#D5DAD3 autour des cartes satellite pour la projection). Icônes Lucide au trait de 1,5 px.</span>
+      </div>
+    </section>
+
+    <section style="background:#FFFFFF; border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:24px; display:flex; flex-direction:column; gap:18px;">
+      <h2 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:28px; font-weight:500;">Pastilles de statut</h2>
+      <sc-for list="{{ pillGroups }}" as="pg" hint-placeholder-count="3">
+        <div style="display:grid; grid-template-columns:180px minmax(0, 1fr); gap:16px; align-items:center;">
+          <span style="font-size:14px; font-weight:600; color:#4F5853;">{{ pg.title }}</span>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <sc-for list="{{ pg.items }}" as="p" hint-placeholder-count="6">
+              <span style="display:inline-flex; align-items:center; gap:7px; height:28px; padding:0 11px; border-radius:999px; background:{{ p.bg }}; color:{{ p.fg }}; border:{{ p.bd }}; font-size:13px; font-weight:600; white-space:nowrap;"><span style="width:9px; height:9px; box-sizing:border-box; border-radius:{{ p.r }}; background:{{ p.dot }}; border:{{ p.dotBd }};"></span>{{ p.label }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <section style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px;">
+      <div style="background:#FFFFFF; border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:16px; display:flex; flex-direction:column; gap:10px;">
+        <span style="font-size:13px; font-weight:600; color:#4F5853;">KPI · carte bento S</span>
+        <div style="display:flex; flex-direction:column; gap:6px; padding:14px 16px; border-radius:18px; border:1px solid #E3E6E1;">
+          <span style="font-family:'Source Serif 4', Georgia, serif; font-size:15px; font-weight:500;">Alertes ouvertes</span>
+          <div style="display:flex; align-items:flex-end; justify-content:space-between;"><span style="font-family:'Source Serif 4', Georgia, serif; font-size:48px; line-height:1; color:#A62C2C;">3</span><span style="width:28px; height:28px; border-radius:9px; background:#FBE9E9; color:#B03030; display:grid; place-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span></div>
+          <span style="font-size:14px; color:#B03030;">+2 depuis hier</span>
+        </div>
+      </div>
+      <div style="background:#FFFFFF; border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:16px; display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <span style="align-self:flex-start; font-size:13px; font-weight:600; color:#4F5853;">Jauge semi-circulaire d’indice</span>
+        <div style="position:relative; width:206px; height:124px;">
+          <svg width="206" height="124" viewBox="0 0 240 144" aria-hidden="true">
+            <path d="M 6 124 A 114 114 0 0 1 234 124" fill="none" stroke="#C7CEC8" stroke-width="1.6" stroke-dasharray="1.5 4.2"></path>
+            <path d="M 20 124 A 100 100 0 0 1 89.1 28.9" fill="none" stroke="#D4ECDF" stroke-width="14"></path>
+            <path d="M 89.1 28.9 A 100 100 0 0 1 150.9 28.9" fill="none" stroke="#F7EBC2" stroke-width="14"></path>
+            <path d="M 150.9 28.9 A 100 100 0 0 1 220 124" fill="none" stroke="#F5D2D2" stroke-width="14"></path>
+            <path d="M 20 124 A 100 100 0 0 1 189.56 52.07" fill="none" stroke="#D64545" stroke-width="14" stroke-linecap="round"></path>
+            <line x1="146.6" y1="42.2" x2="156.4" y2="11.9" stroke="#1A1F1D" stroke-width="2.4" stroke-linecap="round"></line>
+            <circle cx="189.56" cy="52.07" r="10" fill="#FFFFFF" stroke="#D64545" stroke-width="4"></circle>
+          </svg>
+          <span style="position:absolute; left:0; right:0; bottom:-2px; text-align:center; font-family:'Source Serif 4', Georgia, serif; font-size:68px; line-height:1;">78</span>
+        </div>
+        <span style="font-size:13px; color:#4F5853;">Seuil à 60 · Max / Min / Moy sous la jauge</span>
+      </div>
+      <div style="background:#FFFFFF; border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:16px; display:flex; flex-direction:column; gap:12px;">
+        <span style="font-size:13px; font-weight:600; color:#4F5853;">Commandes</span>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button type="button" style="height:40px; padding:0 16px; border-radius:999px; border:0; background:#2F9E6E; color:#FFFFFF; font-size:14px; font-weight:600; cursor:pointer;" style-hover="background:#278A5F;" style-active="background:#1E6E4C;">Assigner une mission</button>
+          <button type="button" style="height:40px; padding:0 16px; border-radius:999px; border:1px solid #D5DAD3; background:#FFFFFF; color:#1A1F1D; font-size:14px; font-weight:500; cursor:pointer;" style-hover="background:#F7F8F6;">Exporter en PDF</button>
+          <button type="button" style="height:40px; padding:0 14px; border-radius:999px; border:0; background:transparent; color:#1E6E4C; font-size:14px; font-weight:500; cursor:pointer;" style-hover="background:#EEF5F0;">Fausse alerte</button>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+          <button type="button" role="switch" aria-checked="{{ sw }}" onClick="{{ toggleSw }}" aria-label="Interrupteur de démonstration" style="position:relative; width:44px; height:26px; border-radius:999px; border:0; background:{{ swBg }}; cursor:pointer; padding:0; transition:background 150ms;"><span style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#FFFFFF; box-shadow:0 1px 2px rgba(0,0,0,0.2); transform:{{ swKnob }}; transition:transform 150ms;"></span></button>
+          <span style="font-size:14px;">{{ swLabel }}</span>
+          <input type="range" min="0" max="100" value="{{ rng }}" onChange="{{ onRng }}" aria-label="Curseur" style="flex:1; min-width:120px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:13px;">{{ rng }} %</span>
+        </div>
+        <div role="tablist" style="display:flex; gap:2px; padding:3px; border-radius:999px; background:#F1F3F0; border:1px solid #E3E6E1; align-self:flex-start;">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3"><button type="button" role="tab" aria-selected="{{ t.on }}" onClick="{{ t.pick }}" style="height:32px; padding:0 14px; border-radius:999px; border:0; background:{{ t.bg }}; box-shadow:{{ t.sh }}; font-size:13px; font-weight:{{ t.w }}; color:#1A1F1D; cursor:pointer;">{{ t.label }}</button></sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:grid; grid-template-columns:minmax(0, 1.2fr) minmax(0, 1fr); gap:16px;">
+      <div style="position:relative; min-height:300px; border-radius:18px; overflow:hidden; border:1px solid #D5DAD3; background-color:#1B2A22; background-image:url('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/g/14/7899/7957.jpg'), url('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/g/14/7899/7958.jpg'), url('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/g/14/7900/7957.jpg'), url('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/g/14/7900/7958.jpg'); background-size:256px 256px; background-position:0 0, 256px 0, 0 256px, 256px 256px; background-repeat:no-repeat;">
+        <div style="position:absolute; right:12px; top:12px; display:flex; flex-direction:column; gap:5px;">
+          <sc-for list="{{ ctrls }}" as="c" hint-placeholder-count="4"><span style="width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:rgba(20,40,32,0.74); border:1px solid rgba(255,255,255,0.16); color:#F2F5F3;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ c }}"></path></svg></span></sc-for>
+        </div>
+        <div style="position:absolute; left:14px; top:14px; width:250px; padding:12px 14px; border-radius:16px; background:rgba(20,40,32,0.62); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.14); color:#F2F5F3; display:flex; flex-direction:column; gap:8px;">
+          <span style="font-family:'Source Serif 4', Georgia, serif; font-size:17px;">Site ORP-0142 · Kokumbo</span>
+          <span style="align-self:flex-start; display:inline-flex; align-items:center; gap:6px; height:22px; padding:0 8px; border-radius:999px; background:rgba(214,69,69,0.32); border:1px solid #E06464; font-size:12px; font-weight:600;">Illégal présumé</span>
+          <span style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:rgba(255,255,255,0.72);">Sol mis à nu</span><span>28,5 ha</span></span>
+          <span style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:rgba(255,255,255,0.72);">Baisse du NDVI</span><span style="font-weight:600;">0,48</span></span>
+        </div>
+        <span style="position:absolute; left:14px; bottom:14px; display:flex; align-items:center; gap:7px; padding:6px 11px; border-radius:999px; background:rgba(20,40,32,0.74); border:1px solid rgba(255,255,255,0.14); color:#F2F5F3; font-size:13px;"><span style="font-weight:600;">Source</span> · Sentinel-2 cloudless 2025 · EOX · 10 m</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; align-items:center; gap:12px; height:56px; padding:0 14px; border-radius:14px; background:#B93A3A; color:#FFFFFF;"><span style="font-weight:700; letter-spacing:0.06em;">ALERTE</span><span style="font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">PH-CI-003 · Kokumbo · Indice 78 · 412 NTU</span></div>
+        <div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:14px; background:#1A1F1D; color:#F2F5F3; font-size:14px;"><span style="width:22px; height:22px; border-radius:50%; background:#2F9E6E; display:grid; place-items:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Toast · Notification envoyée</div>
+        <label style="display:flex; align-items:center; gap:8px; height:40px; padding:0 8px 0 12px; border-radius:999px; background:#FFFFFF; border:1px solid #E3E6E1; color:#6B7570;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"></circle><path d="m20.5 20.5-4.2-4.2"></path></svg><input placeholder="Rechercher un site, un capteur, un permis…" aria-label="Recherche" style="flex:1; min-width:0; border:0; outline:none; background:transparent; font-size:14px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:#4F5853; border:1px solid #E3E6E1; border-radius:6px; padding:2px 5px;">⌘K</span></label>
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5"><button type="button" aria-pressed="{{ c.on }}" onClick="{{ c.pick }}" style="height:32px; padding:0 12px; border-radius:999px; border:1px solid {{ c.bd }}; background:{{ c.bg }}; color:{{ c.fg }}; font-size:13px; font-weight:500; cursor:pointer;">{{ c.label }}</button></sc-for>
+        </div>
+        <div style="padding:12px 14px; border-radius:14px; background:#F7F8F6; border:1px solid #ECEEEA; display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:13px; font-weight:600;">Mesure avec bande de référence</span>
+          <svg viewBox="0 0 300 60" aria-hidden="true" style="width:100%; height:60px;"><rect x="0" y="40" width="300" height="10" fill="#E6F4EC"></rect><line x1="0" x2="300" y1="18" y2="18" stroke="#D64545" stroke-width="1.2" stroke-dasharray="4 3"></line><path d="M0 46 L180 45 L200 44 L215 36 L230 22 L245 12 L260 8 L300 7" fill="none" stroke="#1A1F1D" stroke-width="2"></path></svg>
+          <span style="font-size:12px; color:#4F5853;">Bande verte : valeur de référence · tireté rouge : seuil d’alerte</span>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:#FFFFFF; border:1px solid #E3E6E1; border-radius:18px; box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04); padding:24px; display:flex; flex-direction:column; gap:12px;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap;"><h2 style="margin:0; font-family:'Source Serif 4', Georgia, serif; font-size:28px; font-weight:500;">Jetons · variables CSS</h2><span style="font-size:14px; color:#4F5853;">Pour l’intégration Next.js + Tailwind (theme.extend.colors reprend les mêmes noms).</span></div>
+      <pre style="margin:0; padding:16px 18px; border-radius:14px; background:#14201A; color:#DDE7E1; font-family:'IBM Plex Mono', monospace; font-size:13px; line-height:1.6; overflow:auto; white-space:pre;">{{ cssTokens }}</pre>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const NEUTRALS = [
+  ['--bg', '#F3F4F1', 'Fond de l’application'], ['--surface-1', '#FFFFFF', 'Cartes bento'], ['--surface-2', '#F7F8F6', 'Zones internes, champs'], ['--border', '#E3E6E1', 'Bordure 1 px des cartes'],
+  ['--border-strong', '#D5DAD3', 'Cartes satellite, projection'], ['--text', '#1A1F1D', 'Texte principal'], ['--text-2', '#4F5853', 'Texte secondaire (AA sur blanc)'], ['--text-3', '#6B7570', 'Légendes, 12–13 px'], ['--text-4', '#9AA39E', 'Décoratif uniquement']
+];
+const ACCENTS = [
+  ['--accent', '#2F9E6E', 'Vert forêt : action principale, état normal'], ['--accent-strong', '#1E6E4C', 'Texte vert, état pressé'],
+  ['--gold', '#C9A227', 'Logo et titres de rapport, jamais un statut'], ['--danger-surface', '#B93A3A', 'Bannière d’alerte (texte blanc 5,6:1)']
+];
+const STATUSES = [
+  ['Légal · permis valide', '#2F9E6E', 'rgba(47,158,110,0.22)', '2px solid #2F9E6E', 'Contour plein · point rond · icône coche'],
+  ['Non conforme', '#E07B39', 'repeating-linear-gradient(-45deg, #E07B39 0 1.5px, rgba(224,123,57,0.16) 1.5px 5px)', '2px solid #E07B39', 'Contour plein + hachure fine · point carré'],
+  ['Suspect · à vérifier', '#E8B931', 'rgba(232,185,49,0.16)', '2px dashed #C99A1A', 'Contour en pointillés · point triangle'],
+  ['Illégal présumé', '#D64545', 'repeating-linear-gradient(45deg, #D64545 0 3px, rgba(214,69,69,0.2) 3px 7px)', '2px dashed #D64545', 'Hachure diagonale, contour tireté'],
+  ['Illégal confirmé', '#D64545', 'repeating-linear-gradient(45deg, #D64545 0 3px, rgba(214,69,69,0.2) 3px 7px)', '2px solid #D64545', 'Hachure diagonale · point losange'],
+  ['Démantelé · réhabilitation', '#6B7F99', 'rgba(107,127,153,0.14)', '1px solid #6B7F99', 'Contour fin · point en anneau'],
+  ['Zone de changement Sentinel-2', '#D946A8', 'rgba(217,70,168,0.2)', '2px solid #D946A8', 'Magenta, numérotée, jamais présent dans la nature'],
+  ['Eau · capteurs', '#3BB3D9', 'radial-gradient(circle at 50% 50%, #3BB3D9 0 9px, transparent 10px), #EAF6FB', '1px solid #CBE7F2', 'Pastille cyan, icône goutte'],
+  ['Feux actifs NASA FIRMS', '#FF7A1A', 'radial-gradient(circle at 50% 50%, #FF7A1A 0 6px, rgba(255,122,26,0.25) 7px 12px, transparent 13px), #FFF4EC', '1px solid #F7D9C2', 'Point pulsé (2 s), seule animation permanente avec les alertes']
+];
+const segColor = k => { const t = k * 100; if (t < 40) return ['#2F9E6E', '#3FA874', '#58B07A', '#7DBB7A'][Math.min(3, Math.floor(t / 10))]; if (t < 60) return t < 50 ? '#D9BE3E' : '#E8B931'; return ['#E8A13A', '#E07B39', '#DC6A3E', '#D85842', '#D64545'][Math.min(4, Math.floor((t - 60) / 8))]; };
+const P = (label, bg, fg, dot, r, bd, dotBd) => ({ label, bg, fg, dot, r: r || '50%', bd: bd || '0', dotBd: dotBd || '0' });
+const PILLS = [
+  { title: 'Sites (6)', items: [P('Légal', '#E6F4EC', '#1E6E4C', '#2F9E6E'), P('Non conforme', '#FBEDE4', '#9A4A1C', '#E07B39', '1px'), P('Suspect', '#FBF1CF', '#7A5C00', 'transparent', '1px', '0', '1.5px dashed #C99A1A'), P('Illégal présumé', '#FBE3E3', '#A62C2C', 'repeating-linear-gradient(45deg, #D64545 0 2px, #F0BDBD 2px 4px)', '2px', '1px dashed #E8A3A3'), P('Illégal confirmé', '#FBE3E3', '#A62C2C', '#D64545', '2px'), P('Démantelé', '#EEF1F5', '#4E5F76', 'transparent', '50%', '0', '2px solid #6B7F99')] },
+  { title: 'Alertes (6)', items: [P('Nouvelle', '#FBE9E9', '#A62C2C', '#D64545'), P('Analyse satellite', '#F8E7F2', '#962A71', '#D946A8', '2px'), P('Confirmée', '#FBEDE4', '#9A4A1C', '#E07B39', '0'), P('Assignée', '#E4F3F9', '#1B6680', '#3BB3D9'), P('Clôturée', '#EAF5EF', '#1E6E4C', '#2F9E6E', '2px'), P('Fausse alerte', '#F0F2F1', '#4F5853', '#9AA39E', '0')] },
+  { title: 'Missions (4)', items: [P('Assignée', '#E4F3F9', '#1B6680', '#3BB3D9'), P('En route', '#E8EEF8', '#2B4F86', '#2B5FA8', '1px'), P('Sur site', '#FBF1CF', '#7A5C00', '#E1AE1E', '0'), P('Clôturée', '#EAF5EF', '#1E6E4C', '#2F9E6E', '2px')] }
+];
+const CSS = `:root {
+  --bg: #F3F4F1;  --surface-1: #FFFFFF;  --surface-2: #F7F8F6;
+  --border: #E3E6E1;  --border-strong: #D5DAD3;
+  --text: #1A1F1D;  --text-2: #4F5853;  --text-3: #6B7570;  --text-4: #9AA39E;
+  --accent: #2F9E6E;  --accent-hover: #278A5F;  --accent-strong: #1E6E4C;  --gold: #C9A227;
+  --glass-bg: rgba(20, 40, 32, 0.62);  --glass-blur: 20px;  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-text: #F2F5F3;  --glass-text-2: rgba(255, 255, 255, 0.7);
+  --st-legal: #2F9E6E;  --st-noncompliant: #E07B39;  --st-suspect: #E8B931;
+  --st-illegal: #D64545;  --st-dismantled: #6B7F99;
+  --layer-firms: #FF7A1A;  --layer-water: #3BB3D9;  --layer-change: #D946A8;
+  --index-normal: #2F9E6E;  --index-watch: #E8B931;  --index-alert: #D64545;  --index-threshold: 60;
+  --radius-card: 18px;  --radius-inner: 12px;  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --font-display: 'Source Serif 4', Georgia, serif;
+  --font-ui: 'Geist', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --space: 8px;  /* 4 · 8 · 12 · 16 · 24 · 32 · 48 */
+}`;
+
+class Component extends DCLogic {
+  state = { sw: true, rng: 60, tab: 'Balayage', chips: { 'Toutes': false, 'Ouvertes': true, 'Bélier': true, 'Indice ≥ 60': false, '7 jours': true } };
+  renderVals() {
+    const s = this.state;
+    return {
+      neutrals: NEUTRALS.map(([name, hex, use]) => ({ name, hex, use })),
+      accents: ACCENTS.map(([name, hex, use]) => ({ name, hex, use })),
+      statuses: STATUSES.map(([label, hex, fill, border, rule]) => ({ label, hex, fill, border, rule })),
+      segs: Array.from({ length: 50 }, (_, i) => ({ c: segColor(i / 49) })),
+      spaces: [4, 8, 12, 16, 24, 32].map(n => ({ px: n + 'px', label: String(n) })),
+      pillGroups: PILLS,
+      sw: s.sw, swBg: s.sw ? '#2F9E6E' : '#C7CEC8', swKnob: s.sw ? 'translateX(18px)' : 'translateX(0)', swLabel: s.sw ? 'Notifications activées' : 'Notifications coupées', toggleSw: () => this.setState({ sw: !s.sw }),
+      rng: s.rng, onRng: e => this.setState({ rng: +e.target.value }),
+      tabs: ['Balayage', 'Côte à côte', 'Fondu'].map(label => { const on = s.tab === label; return { label, on, pick: () => this.setState({ tab: label }), bg: on ? '#FFFFFF' : 'transparent', sh: on ? '0 1px 2px rgba(0,0,0,0.1)' : 'none', w: on ? 600 : 500 }; }),
+      chips: Object.keys(s.chips).map(label => { const on = s.chips[label]; return { label, on, pick: () => this.setState({ chips: Object.assign({}, s.chips, { [label]: !on }) }), bg: on ? '#EEF5F0' : '#FFFFFF', bd: on ? '#9FD0B7' : '#E3E6E1', fg: on ? '#1E6E4C' : '#4F5853' }; }),
+      ctrls: ['M5 12h14M12 5v14', 'M5 12h14', 'm16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265zM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20', 'M2 12h3M19 12h3M12 2v3M12 19v3M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6'],
+      cssTokens: CSS
+    };
+  }
+}
+</script>
+</body>
+</html>

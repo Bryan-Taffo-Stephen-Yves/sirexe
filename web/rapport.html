@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rapport d’intervention · Cirex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<script src="./config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="./cirex-data.js"></script>
+<style>
+  :root { --ink: #1A1F1D; --ink-2: #4F5853; --ink-3: #6B7570; --line: #E3E6E1; --bg: #E4E7E2; --paper: #FFFFFF; --green: #2F9E6E; --magenta: #C2399A; --warn-bg: #FBF6E6; --warn-bd: #C99A1A; --warn-fg: #7A5C00; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Geist', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .bar { position: sticky; top: 0; z-index: 2; display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 12px 16px; background: #FFFFFF; border-bottom: 1px solid var(--line); }
+  .bar a { color: #1E6E4C; text-decoration: none; font-size: 14px; }
+  .bar button { height: 38px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--green); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  .bar button:focus-visible, .bar a:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  .page { width: min(210mm, calc(100% - 32px)); margin: 24px auto; background: var(--paper); padding: 18mm 16mm; box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 18px 48px rgba(0,0,0,.1); }
+  header.doc { display: flex; justify-content: space-between; gap: 16px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+  .brand { display: flex; gap: 10px; align-items: center; }
+  .brand b { font-size: 17px; }
+  .brand span, .meta { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+  .meta { text-align: right; font-family: 'IBM Plex Mono', monospace; }
+  h1 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 500; font-size: 28px; margin: 18px 0 4px; letter-spacing: -.01em; }
+  h2 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 500; font-size: 18px; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+  p, li { font-size: 13.5px; line-height: 1.55; }
+  .warn { margin: 10px 0; padding: 8px 12px; border-radius: 10px; background: var(--warn-bg); border: 1px dashed var(--warn-bd); color: var(--warn-fg); font-size: 12.5px; }
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+  .kpi { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+  .kpi small { display: block; font-size: 11.5px; color: var(--ink-2); }
+  .kpi b { font-size: 22px; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { text-align: left; padding: 6px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--ink-2); font-weight: 500; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: 'IBM Plex Mono', monospace; }
+  .imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  figure { margin: 0; }
+  .frame { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 8px; border: 1px solid var(--line); background: #0F1A15; }
+  .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  figcaption { font-size: 11.5px; color: var(--ink-2); margin-top: 4px; line-height: 1.4; }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+  .sign div { border: 1px solid var(--line); border-radius: 10px; height: 90px; padding: 8px 10px; font-size: 12px; color: var(--ink-2); }
+  .foot { margin-top: 18px; font-size: 11px; color: var(--ink-3); line-height: 1.5; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  @media (max-width: 640px) { .kpis { grid-template-columns: 1fr 1fr; } .page { padding: 20px 16px; } header.doc { flex-direction: column; } .meta { text-align: left; } }
+  @media print { html, body { background: #fff; } .bar { display: none; } .page { width: auto; margin: 0; padding: 0; box-shadow: none; } h2 { break-after: avoid; } .imgs, table, .sign { break-inside: avoid; } @page { size: A4; margin: 14mm 12mm; } }
+</style>
+</head>
+<body>
+<div class="bar"><a href="Centre de surveillance.dc.html">← Centre de surveillance</a><button type="button" onclick="window.print()">Imprimer ou enregistrer en PDF</button></div>
+<main class="page" id="doc" aria-busy="true">
+  <p>Chargement du rapport…</p>
+</main>
+<script>
+(function () {
+  'use strict';
+  const C = window.CIREX, doc = document.getElementById('doc');
+  const code = new URLSearchParams(location.search).get('code');
+  const el = (tag, attrs, ...kids) => { const e = document.createElement(tag); Object.entries(attrs || {}).forEach(([k, v]) => { if (k === 'class') e.className = v; else e.setAttribute(k, v); }); kids.flat().forEach(k => { if (k == null) return; e.append(k.nodeType ? k : document.createTextNode(String(k))); }); return e; };
+  const row = (...cells) => el('tr', null, cells.map(c => (c && c.nodeType ? c : el('td', null, c))));
+  const num = v => el('td', { class: 'num' }, v);
+
+  async function load() {
+    const sat = await C.ready;
+    const db = C.db();
+    let report = null, alert = null, mission = null, readings = [], dbErr = '';
+    if (db && code) {
+      try {
+        const r = await db.from('reports').select('*').eq('code', code).maybeSingle();
+        if (r.error) throw r.error; report = r.data;
+        if (report && report.alert_id) { const a = await db.from('alerts').select('*').eq('id', report.alert_id).maybeSingle(); alert = a.data; }
+        const mq = report && report.alert_id ? db.from('missions').select('*').eq('alert_id', report.alert_id) : report && report.mission_id ? db.from('missions').select('*').eq('id', report.mission_id) : null;
+        if (mq) { const m = await mq.order('created_at', { ascending: false }).limit(1); mission = m.data && m.data[0]; }
+        if (alert) { const rd = await db.from('readings').select('measured_at, turbidity_ntu, ph, tds_ppm, temperature_c, suspicion_score, source').eq('sensor_id', alert.sensor_id).lte('measured_at', alert.created_at).order('measured_at', { ascending: false }).limit(6); readings = (rd.data || []).reverse(); }
+      } catch (e) { dbErr = e.message || String(e); }
+    }
+    render({ sat, report, alert, mission, readings, dbErr });
+  }
+
+  function render({ sat, report, alert, mission, readings, dbErr }) {
+    doc.textContent = ''; doc.setAttribute('aria-busy', 'false');
+    const S = sat && sat.summary, today = new Date();
+    doc.append(el('header', { class: 'doc' },
+      el('div', { class: 'brand' }, el('span', { 'aria-hidden': 'true', style: 'display:inline-block;width:30px;height:30px;border-radius:8px;border:2px solid #C9A227' }), el('div', null, el('b', null, 'Cirex · Prototype'), el('br'), el('span', null, 'BRENT GROUP · SIREXE Hackathon 2026 · sans affiliation officielle'))),
+      el('div', { class: 'meta' }, (report ? report.code : 'Brouillon non enregistré'), el('br'), 'Édité le ' + C.dateFr(today.toISOString()), el('br'), report ? 'Statut : ' + ({ brouillon: 'brouillon', transmis: 'transmis', publie: 'publié' }[report.status] || report.status) : '')));
+    doc.append(el('h1', null, report ? report.title : 'Site ORP-0142 · Kokumbo'));
+    doc.append(el('p', { style: 'margin:0;color:#4F5853' }, (report ? report.kind : 'Rapport d’alerte') + ' · Kokumbo, région du Bélier · ' + (S ? C.fr(Math.abs(S.aoi.lat), 4) + '° N, ' + C.fr(Math.abs(S.aoi.lon), 4) + '° O' : '')));
+    if (dbErr) doc.append(el('div', { class: 'warn', role: 'alert' }, 'Serveur injoignable (' + dbErr + ') : seules les données satellite locales sont affichées.'));
+    if (!code) doc.append(el('div', { class: 'warn' }, 'Aucun rapport sélectionné : aperçu construit à partir du calcul satellite courant.'));
+    if (sat && sat.synthetic) doc.append(el('div', { class: 'warn' }, 'Données satellite synthétiques de test : ce rapport ne décrit aucun lieu réel.'));
+
+    // 1. Alerte capteur
+    doc.append(el('h2', null, '1. Signal du capteur'));
+    if (alert) {
+      const t = alert.trigger || {};
+      doc.append(el('p', null, 'Alerte ', el('b', { class: 'mono' }, alert.code), ' créée le ' + C.dateFr(alert.created_at) + ' à ' + new Date(alert.created_at).toISOString().slice(11, 19) + ' GMT par le capteur ', el('b', { class: 'mono' }, alert.sensor_id), ' (source : ' + alert.source + '). Indice de suspicion ' + Math.round(alert.suspicion_score) + ' / 100, seuil 60.'));
+      const b = t.baseline || {};
+      const tb = el('table', null, el('thead', null, el('tr', null, el('th', null, 'Paramètre'), el('th', null, 'Mesure'), el('th', null, 'Référence'))),
+        el('tbody', null, row('Turbidité (NTU)', num(C.fr(t.turbidity_ntu, 0)), num(C.fr(b.turbidity_ntu, 0))), row('Conductivité (ppm)', num(C.fr(t.tds_ppm, 0)), num(C.fr(b.tds_ppm, 0))), row('pH', num(C.fr(t.ph, 1)), num(C.fr(b.ph, 1))), row('Température (°C)', num(C.fr(t.temperature_c, 1)), num(C.fr(b.temperature_c, 1)))));
+      doc.append(tb);
+      if (readings.length) doc.append(el('p', { style: 'font-size:12px;color:#6B7570' }, 'Dernières mesures avant l’alerte : ' + readings.map(r => C.fr(r.turbidity_ntu, 0) + ' NTU').join(' → ') + '.'));
+      doc.append(el('p', { style: 'font-size:12px;color:#6B7570' }, 'Le pH seul ne permet pas de détecter le mercure : la turbidité (lavage du minerai) et la conductivité sont les signaux retenus. Un prélèvement pour analyse en laboratoire reste nécessaire.'));
+    } else {
+      doc.append(el('p', null, 'Aucune alerte capteur rattachée à ce rapport.'));
+    }
+
+    // 2. Satellite
+    doc.append(el('h2', null, '2. Confirmation satellite · Sentinel-2'));
+    if (S) {
+      doc.append(el('div', { class: 'kpis' },
+        el('div', { class: 'kpi' }, el('small', null, 'Végétation → sol nu'), el('b', null, C.fr(S.surface_totale_ha, 1) + ' ha')),
+        el('div', { class: 'kpi' }, el('small', null, 'Zones de changement'), el('b', null, S.n_zones)),
+        el('div', { class: 'kpi' }, el('small', null, 'Baisse moyenne du NDVI'), el('b', null, C.fr(S.signal_moyen, 2))),
+        el('div', { class: 'kpi' }, el('small', null, 'Première baisse confirmée'), el('b', { style: 'font-size:16px' }, S.premiere_detection ? C.monthLong(S.premiere_detection) : '—'))));
+      doc.append(el('div', { class: 'imgs', style: 'margin-top:10px' },
+        el('figure', null, el('div', { class: 'frame' }, el('img', { src: sat.img.avant, alt: 'Composite Sentinel-2 avant' })), el('figcaption', null, 'Avant · ' + C.periodFr(S.avant.periode) + ' · médiane de ' + S.avant.dates.length + ' images')),
+        el('figure', null, el('div', { class: 'frame' }, el('img', { src: sat.img.apres, alt: 'Composite Sentinel-2 après avec zones de changement' }), el('img', { src: sat.img.changes, alt: '' })), el('figcaption', null, 'Après · ' + C.periodFr(S.apres.periode) + ' · médiane de ' + S.apres.dates.length + ' images · zones en magenta'))));
+      const tb = el('table', { style: 'margin-top:10px' }, el('thead', null, el('tr', null, el('th', null, 'Zone'), el('th', null, 'Type'), el('th', null, 'Surface (ha)'), el('th', null, 'Baisse NDVI'), el('th', null, '1re baisse'), el('th', null, 'Centre (lat, lon)'))),
+        el('tbody', null, sat.zones.slice(0, 10).map(z => row(z.id, z.type, num(C.fr(z.ha, 2)), num(C.fr(z.signal, 2)), z.first ? C.monthFr(z.first) : '—', el('td', { class: 'mono' }, z.centre ? C.fr(z.centre[0], 5) + ', ' + C.fr(z.centre[1], 5) : '—')))));
+      doc.append(tb);
+      if (sat.zones.length > 10) doc.append(el('p', { style: 'font-size:12px;color:#6B7570' }, '+ ' + (sat.zones.length - 10) + ' zones plus petites (liste complète dans changes.geojson).'));
+      doc.append(el('p', { style: 'font-size:12px;color:#6B7570' }, S.methode + ' Une perte de végétation peut aussi venir d’un défrichement agricole : la vérification terrain tranche. « Baisse NDVI » mesure l’intensité du changement, pas une probabilité.'));
+    } else doc.append(el('p', null, 'Calcul satellite indisponible.'));
+
+    // 3. Cadastre
+    doc.append(el('h2', null, '3. Situation au regard du cadastre minier'));
+    doc.append(el('p', null, 'Le cadastre utilisé par ce prototype est fictif. Aucun titre minier n’y couvre ces zones : statut « illégal présumé », à confirmer auprès du cadastre minier officiel.'));
+
+    // 4. Mission
+    doc.append(el('h2', null, '4. Intervention terrain'));
+    if (mission) {
+      doc.append(el('table', null, el('tbody', null, row('Mission', el('td', { class: 'mono' }, mission.code)), row('Agent', mission.agent || 'à assigner'), row('Statut', ({ aassigner: 'à assigner', assignee: 'assignée', route: 'en route', site: 'sur site', cloturee: 'clôturée' }[mission.status] || mission.status)), row('Consignes', mission.instructions || '—'), row('Constat', mission.report || '—'), row('Photo géolocalisée', mission.photo_url ? el('td', null, el('a', { href: mission.photo_url }, 'photo'), mission.photo_lat != null ? ' · ' + C.fr(mission.photo_lat, 5) + ', ' + C.fr(mission.photo_lon, 5) : '') : '—'))));
+    } else doc.append(el('p', null, 'Aucune mission rattachée pour le moment.'));
+
+    doc.append(el('h2', null, '5. Visas'));
+    doc.append(el('div', { class: 'sign' }, el('div', null, 'Agent de terrain · nom, date, signature'), el('div', null, 'Superviseur · nom, date, signature')));
+    doc.append(el('p', { class: 'foot' }, 'Sources : Copernicus Sentinel-2 L2A (ESA) via AWS Open Data « sentinel-cogs », traitement Cirex (pipeline/ndvi_pipeline.py' + (S ? ', calcul du ' + C.dateFr(S.genere_le) : '') + '). Mesures capteur : boîtier Cirex ' + (alert ? alert.sensor_id : '') + '. Document produit par un prototype de concours, sans valeur officielle.'));
+  }
+
+  if (!C) { doc.textContent = 'cirex-data.js introuvable.'; return; }
+  load().catch(e => { doc.textContent = 'Erreur : ' + (e && e.message || e); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "synthetic": true,
+  "site": "Kokumbo",
+  "source": "Données synthétiques de test",
+  "methode": "Détection de changement par indice NDVI (médianes avant / après, nuages masqués par la bande SCL). Pas de modèle d'IA entraîné.",
+  "aoi": {
+    "lat": 6.4189,
+    "lon": -5.1386,
+    "rayon_m": 5000
+  },
+  "parametres": {
+    "part_claire_min": 0.7,
+    "ndvi_vegetation_avant_min": 0.55,
+    "ndvi_apres_max": 0.35,
+    "baisse_ndvi_min": 0.25,
+    "surface_min_ha": 0.5
+  },
+  "avant": {
+    "periode": [
+      "2019-01-01",
+      "2019-03-31"
+    ],
+    "dates": [],
+    "rejetees": []
+  },
+  "apres": {
+    "periode": [
+      "2025-11-01",
+      "2026-03-31"
+    ],
+    "dates": [],
+    "rejetees": []
+  },
+  "couverture_valide": 1.0,
+  "n_zones": 3,
+  "surface_totale_ha": 166.31,
+  "terrains_de_football": 232.9,
+  "premiere_detection": "2023-04-04",
+  "signal_moyen": 0.63,
+  "signal_definition": "Baisse moyenne du NDVI entre avant et après (0 à 1). Intensité du changement, pas une probabilité.",
+  "images": {
+    "bounds": [
+      [
+        6.373499,
+        -5.183934
+      ],
+      [
+        6.464244,
+        -5.093189
+      ]
+    ],
+    "avant": "avant.jpg",
+    "apres": "apres.jpg",
+    "ndvi_avant": "ndvi_avant.png",
+    "ndvi_apres": "ndvi_apres.png",
+    "changements": "changements.png"
+  },
+  "genere_le": "2026-10-13T02:02:27+00:00"
+}
