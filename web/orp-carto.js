@@ -12,7 +12,8 @@
     plan: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
     places: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
     hydro: 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Esri_Hydro_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
-    topo: 'vendor/world-atlas-2.0.2/countries-110m.json' // contour de la Côte d'Ivoire (mini-carte), hébergé avec le site
+    topo: 'vendor/world-atlas-2.0.2/countries-110m.json', // contour de la Côte d'Ivoire (mini-carte), hébergé avec le site
+    fond: 'data/fond-s2/' // mosaïque Sentinel-2 hébergée avec le site (pipeline/fond_s2.py), visible quand Esri / EOX ne répondent pas
   };
   const s2 = yr => 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-' + yr + '_3857/default/g/{z}/{y}/{x}.jpg';
   const CI = [[4.35, -8.6], [10.74, -2.49]];
@@ -144,6 +145,7 @@
 .orp-map,.orp-cmp-a,.orp-cmp-b{position:absolute;inset:0}
 .orp-cmp-a{z-index:1}.orp-cmp-b{z-index:2}
 .orp-host .leaflet-container{background:transparent;font:inherit;outline:none}
+.leaflet-fond-pane img.leaflet-tile{mix-blend-mode:normal}
 .orp-host .leaflet-container:focus-visible{outline:2px solid #3BB3D9;outline-offset:-2px}
 .orp-di{background:none!important;border:0!important}
 .orp-pin{position:absolute;left:-14px;top:-14px;display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap}
@@ -206,6 +208,17 @@
     if (!topoP) topoP = fetch(URLS.topo).then(r => r.json()).then(t => waitFor(() => window.topojson, 8000).then(() => window.topojson.feature(t, t.objects.countries).features.find(f => String(f.id) === '384'))).catch(() => null);
     return topoP;
   }
+  // Fond hébergé : tiles.json décrit les niveaux, les emprises et les scènes utilisées
+  let fondP = null;
+  function fondMeta() {
+    if (!fondP) fondP = fetch(URLS.fond + 'tiles.json').then(r => (r.ok ? r.json() : null)).then(m => {
+      if (!m || !Array.isArray(m.couches) || !m.couches.length) return null;
+      const ys = Object.values(m.scenes || {}).flat().map(s => +String(s.date).slice(0, 4)).filter(Boolean);
+      m.label = 'Sentinel-2 L2A · mosaïque ' + (ys.length ? Math.min(...ys) + '-' + Math.max(...ys) : '') + ' · hébergée avec le site';
+      return m;
+    }).catch(() => null);
+    return fondP;
+  }
   const MB = { lon0: -8.75, lat1: 10.85, k: 15.2, cx: Math.cos(7.5 * Math.PI / 180) };
   const mp = (lat, lon) => [(lon - MB.lon0) * MB.cx * MB.k + 4, (MB.lat1 - lat) * MB.k + 2];
 
@@ -248,7 +261,7 @@
         '<svg class="orp-link"><line x1="0" y1="0" x2="0" y2="0" stroke="#fff" stroke-width="1.5" stroke-opacity=".9"/><circle r="9" fill="rgba(255,255,255,.22)" stroke="#fff" stroke-width="1.5"/><circle r="3.5" fill="#fff"/><circle r="3" fill="#fff"/></svg>' +
         '<div class="orp-read"><span class="orp-scale"><i></i><span></span></span><span class="orp-coord"></span></div>' +
         '<div class="orp-mini"><svg class="orp-mini-svg" viewBox="0 0 108 100"><path class="orp-mini-ci"/><rect class="orp-mini-view" width="0" height="0"/></svg><button class="orp-mini-tg" type="button" title="Mini-carte de situation" aria-label="Replier la mini-carte">' + I.mini + '</button></div>' +
-        '<div class="orp-attr">Esri, Maxar · Sentinel-2 / EOX · Copernicus Sentinel-2 L2A (zones) · feux : fictifs</div>' + FILTERS(this.uid);
+        '<div class="orp-attr">Esri, Maxar · Sentinel-2 / EOX · Copernicus Sentinel-2 L2A (zones, fond hébergé) · feux : fictifs</div>' + FILTERS(this.uid);
       this.querySelector('.orp-mini-tg').addEventListener('click', () => this.querySelector('.orp-mini').classList.toggle('is-off'));
       waitFor(() => window.L).then(() => applyData()).then(() => this._setup()).catch(e => console.warn('orp-map', e && e.message, e && e.stack));
     }
@@ -269,6 +282,19 @@
       };
       this.refs = { places: L.tileLayer(URLS.places, { pane: 'ref', maxNativeZoom: 18, maxZoom: 18, crossOrigin: true, keepBuffer: 1 }), hydro: L.tileLayer(URLS.hydro, { pane: 'ref', maxNativeZoom: 16, maxZoom: 18, opacity: 0.9, crossOrigin: true, keepBuffer: 1 }) };
       this.base = 'esri'; this.s2year = 2025; this.bases.esri.addTo(map);
+      // fond hébergé sous les tuiles Esri / EOX : recouvert quand elles chargent, visible quand elles échouent
+      map.createPane('fond').style.zIndex = 150; map.createPane('fondk').style.zIndex = 160;
+      this._want = 'esri'; this._rs = { ok: 0, err: 0 };
+      Object.keys(this.bases).forEach(k => this.bases[k].on('tileload', () => { if (k === this._want) { this._rs.ok++; this._fondCheck(); } }).on('tileerror', () => { if (k === this._want) { this._rs.err++; this._fondCheck(); } }));
+      fondMeta().then(m => {
+        if (!m || !this.map) return; this.fondLabel = m.label;
+        // tuiles agrandies d'un pixel : pas d'interstice entre tuiles aux zooms fractionnaires
+        const Fond = L.TileLayer.extend({ _initTile(tile) { L.TileLayer.prototype._initTile.call(this, tile); const t = this.getTileSize(); tile.style.width = t.x + 1 + 'px'; tile.style.height = t.y + 1 + 'px'; } });
+        m.couches.forEach(c => new Fond(URLS.fond + '{z}/{x}/{y}.jpg', { pane: 'fond', minNativeZoom: c.zmin, maxNativeZoom: c.zmax, minZoom: c.zmin > 5 ? c.zmin - 0.4 : 0, maxZoom: 18, bounds: c.bounds, keepBuffer: 1 }).addTo(map));
+        this._emitView();
+      });
+      // Kokumbo : composite Sentinel-2 « après » du pipeline (10 m), même période que le fond
+      applyData().then(d => { if (d && d.img && d.img.apres && d.bounds && this.map) L.imageOverlay(d.img.apres, d.bounds, { pane: 'fondk', interactive: false }).addTo(this.map); });
       this.R = L.svg({ padding: 0.5 }).addTo(map);
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
       defs.innerHTML = '<pattern id="orp-hi-' + uid + '" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)"><rect width="7" height="7" fill="rgba(214,69,69,0.28)"/><rect width="2.6" height="7" fill="#D64545"/></pattern><pattern id="orp-hn-' + uid + '" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(-45)"><rect width="5" height="5" fill="rgba(224,123,57,0.22)"/><rect width="1.2" height="5" fill="#E07B39"/></pattern>';
@@ -323,7 +349,9 @@
       this.ready = true; this._emit('ready'); this._emitView();
     }
     _emit(t, d) { emit(this.uid, t, d); }
-    _emitView() { if (this.map) this._emit('view', { zoom: this.map.getZoom(), base: this.base, s2year: this.s2year, tilted: !!this.tilted, measuring: !!this.measuring, on: Object.assign({}, this.on) }); }
+    _emitView() { if (this.map) this._emit('view', { zoom: this.map.getZoom(), base: this.base, s2year: this.s2year, tilted: !!this.tilted, measuring: !!this.measuring, on: Object.assign({}, this.on), fond: (this._down && this.fondLabel) || '' }); }
+    // fond de secours affiché : le fond choisi n'a chargé aucune tuile et en a refusé au moins une
+    _fondCheck() { const down = this._rs.err > 0 && this._rs.ok === 0; if (down !== !!this._down) { this._down = down; this._emitView(); } }
     _s3() { return this.getAttribute('data-s3') || 'normal'; }
     _sIcon(s) { const st = s.id === 'PH-CI-003' ? this._s3() : s.state; return window.L.divIcon({ className: 'orp-di', html: '<div class="orp-sensor orp-s-' + st + '"><span class="orp-ring"></span><span class="orp-sdot">' + I.drop + '</span><span class="orp-lab">' + s.id + (st === 'offline' ? ' · hors ligne' : '') + '</span></div>', iconSize: [0, 0] }); }
     _sensorIcons() { const s = SENSORS[2]; if (this.smk && this.smk[s.id]) this.smk[s.id].setIcon(this._sIcon(s)); }
@@ -423,11 +451,12 @@
     }
     setBase(name) {
       if (!this.map) return; const want = name === 'ndvi' || name === 'turb' ? 's2' : name;
+      if (want !== this._want) { this._want = want; this._rs = { ok: 0, err: 0 }; this._down = false; }
       Object.keys(this.bases).forEach(k => { const ly = this.bases[k]; if (k === want) { if (!this.map.hasLayer(ly)) ly.addTo(this.map); } else if (this.map.hasLayer(ly)) this.map.removeLayer(ly); });
       this.map.getPane('tilePane').style.filter = name === 'ndvi' ? 'url(#orp-exg-' + this.uid + ')' : name === 'turb' ? 'url(#orp-turb-' + this.uid + ')' : '';
       this.base = name; this._emitView();
     }
-    setS2Year(y) { this.s2year = y; this.bases.s2.setUrl(s2(y)); this._emitView(); }
+    setS2Year(y) { this.s2year = y; this._rs = { ok: 0, err: 0 }; this._down = false; this.bases.s2.setUrl(s2(y)); this._emitView(); }
     setLayer(k, v) { if (!this.on) return; this.on[k] = typeof v === 'boolean' ? v : !this.on[k]; this._sync(); this._emitView(); }
     select(id, fromUser) {
       const L = window.L; if (!this.map) return;

@@ -166,7 +166,7 @@
         demoOpen: false, moreOpen: false, morePop: false, searchOpen: false, layersOpen: false,
         demoSource: store.get('cirex-source', 'rejeu'),
         camErr: '', sat: null, satErr: false, server: { ok: false, msg: 'Connexion au serveur…' }, dbAlerts: [], dbMissions: [], dbReports: [], alertCode: null, alertId: null, dev: null, devSms: [], frames: [], frameSel: null,
-        base: 'esri', zoom: 6.7, s2year: 2025, on: Object.assign({}, DEF_ON), tilted: false, measuring: false,
+        base: 'esri', zoom: 6.7, s2year: 2025, fond: '', on: Object.assign({}, DEF_ON), tilted: false, measuring: false,
         now: Date.now(), toasts: [], seqStep: null, muted: store.get('cirex-muted', '0') === '1', view: 'apercu', lf: 0, lq: '', newMissions: [], series: 'idx', searchMsg: '',
         cmpMode: 'balayage', cmpIndex: 'naturel', cmpOpacity: 60, report: null, mission: null, busy: false
       };
@@ -270,7 +270,7 @@
       });
       const on = (t, f) => window.addEventListener(t, f);
       on('orp:select', e => { if (e.detail.uid === this.uid) this.set({ selected: e.detail.id }); });
-      on('orp:view', e => { if (e.detail.uid !== this.uid) return; const d = e.detail; this.set({ base: d.base, zoom: d.zoom, s2year: d.s2year, tilted: d.tilted, measuring: d.measuring, on: d.on }); });
+      on('orp:view', e => { if (e.detail.uid !== this.uid) return; const d = e.detail; this.set({ base: d.base, zoom: d.zoom, s2year: d.s2year, fond: d.fond || '', tilted: d.tilted, measuring: d.measuring, on: d.on }); });
       on('orp:ready', e => { if (e.detail.uid === this.uid) this.applyMapMode(); });
       on('orp:seq', e => { if (e.detail.uid === this.uid) this.handleSeq(e.detail.step); });
       this.ro = window.ResizeObserver ? new ResizeObserver(ents => { let ch = false; ents.forEach(en => { const id = en.target.getAttribute('data-chart'), w = Math.round(en.contentRect.width); if (id && w && Math.abs((this.sizes[id] || 0) - w) > 2) { this.sizes[id] = w; ch = true; } }); if (ch) this.set({}); }) : null;
@@ -478,7 +478,7 @@
     reset(alerte) {
       if (!alerte && this.state.demoSource === 'serveur') this.closeOpenAlerts();
       this.clearTimers(); this.seqRunning = false; this.autoCompare = false; cancelAnimationFrame(this.traf);
-      const n = this.initial(alerte), keep = ['view', 'demoOpen', 'muted', 'demoSource', 'on', 'camErr', 'sat', 'satErr', 'server', 'dbAlerts', 'dbMissions', 'dbReports', 'dev', 'devSms', 'frames', 'series', 'newMissions', 'base', 'zoom', 's2year', 'cmpMode', 'cmpIndex', 'cmpOpacity'];
+      const n = this.initial(alerte), keep = ['view', 'demoOpen', 'muted', 'demoSource', 'on', 'camErr', 'sat', 'satErr', 'server', 'dbAlerts', 'dbMissions', 'dbReports', 'dev', 'devSms', 'frames', 'series', 'newMissions', 'base', 'zoom', 's2year', 'fond', 'cmpMode', 'cmpIndex', 'cmpOpacity'];
       keep.forEach(k => { n[k] = this.state[k]; });
       this.state = n; this.set({}, () => this.applyMapMode());
     }
@@ -1101,13 +1101,13 @@
           const seqMsgs = { vol: 'Vol vers PH-CI-003 · Kokumbo', cercle: 'Rayon d’analyse 5 km · images Sentinel-2', zones: S ? S.n_zones + ' zones de changement · ' + CI.fr(S.surface_totale_ha, 1) + ' ha' : 'Zones Sentinel-2 indisponibles' };
           const seq = seqMsgs[s.seqStep] || '';
           const s2fam = s.base === 's2' || s.base === 'ndvi' || s.base === 'turb';
-          const hint = s.base === 'esri' && s.zoom >= 15 ? 'Détail Esri non daté · la détection utilise Sentinel-2' : s2fam && s.zoom > 14.3 ? 'Au-delà de 10 m, l’image Sentinel-2 est agrandie' : '';
+          const hint = s.fond ? (s.zoom > 10.3 ? 'Fond hébergé : 160 à 300 m par pixel, 10 m autour de Kokumbo' : '') : s.base === 'esri' && s.zoom >= 15 ? 'Détail Esri non daté · la détection utilise Sentinel-2' : s2fam && s.zoom > 14.3 ? 'Au-delà de 10 m, l’image Sentinel-2 est agrandie' : '';
           const SRC = { esri: 'Esri World Imagery · mosaïque haute résolution · date variable', s2: 'Sentinel-2 cloudless ' + s.s2year + ' · EOX · 10 m', ndvi: 'Végétation (approx. NDVI) · Sentinel-2 cloudless ' + s.s2year, turb: 'Turbidité (approx.) · Sentinel-2 cloudless ' + s.s2year, plan: 'Esri World Street Map' };
           let h = '';
           if (where === 'dash') h += '<span class="map-tag glass">' + ic('map-2', 'ic-sm') + 'Carte satellite</span>';
           if (seq) h += '<span class="map-msg glass" role="status"><span class="dot pulse"></span>' + esc(seq) + '</span>';
           else if (hint && where === 'carte') h += '<span class="map-hint glass">' + esc(hint) + '</span>';
-          if (where === 'carte') h += '<span class="map-src glass">' + esc(SRC[s.base] || SRC.esri) + '</span>';
+          if (where === 'carte') h += '<span class="map-src glass">' + esc(s.fond ? s.fond + ' · ' + (s.base === 'plan' ? 'plan Esri' : s.base === 'esri' ? 'Esri' : 'EOX') + ' injoignable' : SRC[s.base] || SRC.esri) + '</span>';
           h += self.siteCard(where);
           return h;
         },

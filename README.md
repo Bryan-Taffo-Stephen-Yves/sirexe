@@ -36,8 +36,10 @@ web/                 site statique (aucune compilation)
   config.js                        URL et clé publique Supabase, jeu de données
   data/kokumbo/                    sorties réelles du pipeline
   data/out_synthetic/              données de test (synthetic: true)
+  data/fond-s2/                    fond de carte Sentinel-2 hébergé (tuiles z5 à z10, voir tiles.json), affiché quand Esri / EOX ne répondent pas
   support.js                       moteur des fichiers .dc.html (Claude Design) : ne pas modifier
 pipeline/ndvi_pipeline.py          calcul NDVI + zones de changement (voir pipeline/README.md)
+pipeline/fond_s2.py                fabrique web/data/fond-s2 (mosaïque Sentinel-2 de saison sèche, nuages retirés)
 supabase/migrations/               tables, indice de suspicion, alertes, droits
 supabase/functions/                ingest-reading (mesures), device-event (état, SMS, photos, commandes), notify-telegram
 relay/esp32_relay.py               ESP32 / ESP32-CAM en HTTP local → serveur HTTPS (mesures, état, SMS, photos, commandes)
