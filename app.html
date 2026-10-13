@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3F2EC">
+<title>Sirexe · Centre de surveillance</title>
+<meta name="description" content="Sirexe · prototype de détection de l'orpaillage clandestin : capteur d'eau, confirmation Sentinel-2, missions et rapports.">
+<link rel="preload" href="app/fonts/urbanist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<!-- bibliothèques hébergées avec le site (copies identiques aux CDN, empreintes SRI vérifiées) : la démo ne dépend que des fonds de carte et de Supabase -->
+<link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H">
+<link rel="stylesheet" href="app/app.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23F6CE3E'/%3E%3Cpath d='M16 7.5c-3.6 4.5-6 7.6-6 10.9a6 6 0 0 0 12 0c0-3.3-2.4-6.4-6-10.9z' fill='none' stroke='%2317171A' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script src="vendor/leaflet-1.9.4/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"></script>
+<script src="vendor/topojson-client-3.1.0/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67"></script>
+<script src="vendor/supabase-js-2.45.4/supabase.js"></script>
+<script src="config.js"></script>
+<script src="cirex-data.js"></script>
+<script src="orp-carto.js"></script>
+<script src="app/icons.js"></script>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:system-ui">Sirexe a besoin de JavaScript pour afficher le centre de surveillance.</p></noscript>
+<div id="cx"></div>
+<script src="app/app.js"></script>
+</body>
+</html>
