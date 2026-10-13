@@ -640,7 +640,7 @@
     async addReport() {
       const C = CX(), db = C && C.db(), s = this.state;
       if (s.report) { window.open('rapport.html?code=' + encodeURIComponent(s.report), '_blank', 'noopener'); return; }
-      if (!db) { this.toast('Serveur non configuré : rapport non enregistré'); return; }
+      if (!db) { this.toast('Serveur non configuré · rapport non enregistré · aperçu local ouvert'); window.open('rapport.html', '_blank', 'noopener'); return; }
       this.set({ busy: true });
       const { data, error } = await db.from('reports').insert({ title: 'Site ORP-0142 · Kokumbo', kind: 'Rapport d’alerte', alert_id: s.alertId || null, content: { satellite: this.summaryForDb() } }).select('code').single();
       this.set({ busy: false });
