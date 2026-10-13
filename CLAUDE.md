@@ -24,7 +24,7 @@ Stephen attend une recommandation claire, puis l'exécution. Priorité absolue :
 - `pipeline/ndvi_pipeline.py` : Sentinel-2 L2A depuis AWS Open Data, sorties dans `web/data/<site>/`.
 - Supabase, projet `sirexe` (`dlcuxdzodgctjcxtmuza`) : tables `sensors`, `readings`, `alerts`, `missions`, `reports`, `notifications`. L'indice de suspicion et la création d'alerte sont des triggers SQL ; la même formule existe dans l'écran (`idxOf`). Tables station : `device_status`, `sms_messages`, `camera_frames` (+ bucket public `camera`), `device_commands`. Fonctions : `ingest-reading` (clé capteur, Telegram en cas d'alerte), `device-event` (état, SMS, photos, commandes de la station), `notify-telegram` (test et alertes de simulation, 1 message / 30 s).
 - `relay/` : relais ESP32 HTTP → serveur, rejeu de mesures.
-- `web/vendor/` : bibliothèques servies avec le site (Leaflet, topojson-client, supabase-js, world-atlas), copies identiques aux CDN. Ne pas remettre de CDN dans `app.html` ni `rapport.html` ; pour changer de version, ajouter un nouveau dossier versionné. Mise en ligne : `vercel.json`, `netlify.toml`, `.github/workflows/pages.yml` (publient `web/` sans build, chemins relatifs).
+- `web/vendor/` : bibliothèques servies avec le site (Leaflet, topojson-client, supabase-js, world-atlas), copies identiques aux CDN. Ne pas remettre de CDN dans `app.html` ni `rapport.html` ; pour changer de version, ajouter un nouveau dossier versionné. Mise en ligne : `vercel.json`, `netlify.toml`, `.github/workflows/gh-pages.yml` (copie `web/` sur la branche `gh-pages` à chaque push sur main ; ne pas modifier `gh-pages` à la main). Tout est publié sans build, chemins relatifs.
 
 ## Vérifier un changement
 

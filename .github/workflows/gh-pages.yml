@@ -1,0 +1,35 @@
+# Sirexe · met le dossier web/ en ligne sur la branche gh-pages (site statique, sans build).
+# Une seule fois : Settings → Pages → « Deploy from a branch » → branche gh-pages, dossier / (root) → Save.
+# Ensuite, chaque push sur main qui modifie web/ met le site à jour (environ 1 minute).
+# Adresse : https://<compte>.github.io/sirexe/ (tous les chemins du site sont relatifs).
+name: Mettre à jour le site
+
+on:
+  push:
+    branches: [main]
+    paths: ['web/**', '.github/workflows/gh-pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gh-pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copier web/ sur la branche gh-pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd web
+          touch .nojekyll   # pas de Jekyll : les anciens écrans .dc.html contiennent des {{ }}
+          git init -q -b gh-pages
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Site Sirexe · web/ de ${GITHUB_SHA::7}"
+          git push -f -q "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
